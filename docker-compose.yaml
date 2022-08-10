@@ -23,7 +23,7 @@ services:
     env_file:
       - .env
     environment:
-      - STACKS_NODE_API_URL=$STACKS_NODE_API_URL
+      - STACKS_NODE_API_URL=${STACKS_NODE_API_URL:-https://stacks-node-api.mainnet.stacks.co/}
       - STREAM_HISTORICAL_DATA=${STREAM_HISTORICAL_DATA:-true}
       - NODE_ENV=${NODE_ENV:-production}
       - DATABASE_URL=${DATABASE_URL:-postgres://postgres:postgres@alex-postgres:5432/stacks-data-lake}
