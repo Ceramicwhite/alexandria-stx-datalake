@@ -1,0 +1,38 @@
+version: "3.5"
+services:
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-13}-alpine
+    container_name: alex-postgres
+    restart: on-failure
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=stacks-data-lake
+      - POSTGRES_PORT=5432
+    volumes:
+      - ./persistent-data/alexandria:/var/lib/postgresql/data
+      - ./src/database/migration.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - default
+  datalake:
+    image: ceramicwhite/alexandria-datalake:latest@sha256:19c346e303a6877bac601e50891364646dc0acb94a24ecf6bf948e222fd1ff6d
+    container_name: alexandria-datalake
+    restart: on-failure
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/stacks-data-lake
+      - STACKS_NODE_API_URL=https://stacks-node-api.mainnet.stacks.co/
+      - STREAM_HISTORICAL_DATA=true
+      - NODE_ENV=production
+    networks:
+      - default
+    depends_on:
+      - postgres
+networks:
+  default:
+    name: ${DOCKER_NETWORK}
+    ipam:
+      driver: default
