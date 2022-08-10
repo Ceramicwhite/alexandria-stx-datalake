@@ -1,7 +1,7 @@
-version: "3.5"
+version: "3.9"
 services:
-  postgres:
-    image: postgres:${POSTGRES_VERSION:-13}-alpine
+  alex-postgres:
+    image: postgres:${POSTGRES_VERSION:-14}-alpine
     container_name: alex-postgres
     restart: on-failure
     env_file:
@@ -17,16 +17,16 @@ services:
     networks:
       - default
   datalake:
-    image: ceramicwhite/alexandria-datalake:latest@sha256:351086e908206ab4da836ef49d593034af080dfec7355d58636faad716765b8d
+    image: ceramicwhite/alexandria-datalake:latest@sha256:19c346e303a6877bac601e50891364646dc0acb94a24ecf6bf948e222fd1ff6d
     container_name: alexandria-datalake
     restart: on-failure
     env_file:
       - .env
     environment:
-      - DATABASE_URL=${DATABASE_URL:-postgres://postgres:postgres@postgres:5432/stacks-data-lake}
-      - STACKS_NODE_API_URL=${STACKS_NODE_API_URL:-https://stacks-node-api.mainnet.stacks.co/}
+      - STACKS_NODE_API_URL=https://stacks-node-api.mainnet.stacks.co/
       - STREAM_HISTORICAL_DATA=${STREAM_HISTORICAL_DATA:-true}
       - NODE_ENV=${NODE_ENV:-production}
+      - DATABASE_URL=${DATABASE_URL:-postgres://postgres:postgres@alex-postgres:5432/stacks-data-lake}
     networks:
       - default
     depends_on:
@@ -36,3 +36,4 @@ networks:
     name: ${DOCKER_NETWORK}
     ipam:
       driver: default
+      
