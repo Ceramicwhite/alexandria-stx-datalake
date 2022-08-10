@@ -17,7 +17,7 @@ services:
     networks:
       - default
   datalake:
-    image: ceramicwhite/alexandria-datalake:latest@sha256:19c346e303a6877bac601e50891364646dc0acb94a24ecf6bf948e222fd1ff6d
+    image: ceramicwhite/alexandria-stx-datalake:latest@sha256:177509212f095888c5e61151519d28f4c80f425b6dfa428c869bc3fa35e8b4c7
     container_name: alexandria-datalake
     restart: on-failure
     env_file:
