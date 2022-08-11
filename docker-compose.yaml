@@ -1,6 +1,6 @@
 version: "3.9"
 services:
-  alex-postgres:
+  postgres:
     image: postgres:${POSTGRES_VERSION:-14}-alpine
     container_name: $DB_HOST
     restart: on-failure
@@ -12,12 +12,12 @@ services:
       - POSTGRES_DB=${DB_DATABASE:-stacks-data-lake}
       - POSTGRES_PORT=${DB_port:-5432}
     volumes:
-      - ./persistent-data/alexandria:/var/lib/postgresql/data
+      - ./persistent-data/postgres/${DB_HOST}:/var/lib/postgresql/data
       - ./src/database/migration.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - default
-  datalake:
-    image: ceramicwhite/alexandria-stx-datalake:latest@sha256:177509212f095888c5e61151519d28f4c80f425b6dfa428c869bc3fa35e8b4c7
+  alexandria-indexer:
+    build: ./
     container_name: alexandria-datalake
     restart: on-failure
     env_file:
@@ -26,7 +26,7 @@ services:
       - STACKS_NODE_API_URL=${STACKS_NODE_API_URL:-https://stacks-node-api.mainnet.stacks.co/}
       - STREAM_HISTORICAL_DATA=${STREAM_HISTORICAL_DATA:-true}
       - NODE_ENV=${NODE_ENV:-production}
-      - DATABASE_URL=${DATABASE_URL:-postgres://postgres:postgres@alex-postgres:5432/stacks-data-lake}
+      - DATABASE_URL=${DATABASE_URL:-postgres://postgres:postgres@postgres:5432/stacks-data-lake}
     networks:
       - default
     depends_on:

@@ -1,0 +1,14 @@
+#Ignoring Git
+.git
+.cache
+.github
+
+#Ignoring postgres data
+persistent-data
+
+#Ignoring all the markdown
+*.md
+
+#Ignoring Env Example
+.env.example
+
