@@ -31,7 +31,6 @@ services:
       - default
     depends_on:
       - postgres
-    
   graphql-engine:
     image: hasura/graphql-engine:latest
     container_name: graphql-engine
