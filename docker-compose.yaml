@@ -31,22 +31,6 @@ services:
       - default
     depends_on:
       - postgres
-  graphql-engine:
-    image: hasura/graphql-engine:latest
-    container_name: graphql-engine
-    restart: on-failure
-    environment:
-      HASURA_GRAPHQL_DATABASE_URL: ${DATABASE_URL:-postgres://postgres:postgres@postgres:5432/stacks-data-lake}
-      HASURA_GRAPHQL_ENABLE_CONSOLE: ${HASURA_GRAPHQL_ENABLE_CONSOLE:-true}
-      HASURA_GRAPHQL_ADMIN_SECRET: ${HASURA_GRAPHQL_ADMIN_SECRET:-myadminsecretkey}
-      HASURA_GRAPHQL_UNAUTHORIZED_ROLE: ${HASURA_GRAPHQL_UNAUTHORIZED_ROLE:-user}
-      HASURA_GRAPHQL_ENABLE_TELEMETRY: "false"
-    ports:
-      - "8080:8080"
-    networks:
-      - default
-    depends_on:
-      - postgres
 networks:
   default:
     name: ${DOCKER_NETWORK}
