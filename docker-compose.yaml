@@ -6,6 +6,11 @@ services:
     restart: on-failure
     env_file:
       - .env
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-postgres}
+      - POSTGRES_USER=${DB_USER:-postgres}
+      - POSTGRES_DB=${DB_DATABASE:-stacks-data-lake}
+      - POSTGRES_PORT=${DB_port:-5432}
     volumes:
       - ./persistent-data/${DB_HOST}:/var/lib/postgresql/data
       - ./src/database/migration.sql:/docker-entrypoint-initdb.d/init.sql
