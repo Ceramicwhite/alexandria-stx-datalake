@@ -8,3 +8,4 @@ persistent-data
 .dockerignore
 .env.example
 dist
+servers.json

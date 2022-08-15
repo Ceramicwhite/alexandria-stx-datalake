@@ -2,6 +2,7 @@ version: "3.9"
 services:
   postgres:
     image: postgres:${POSTGRES_VERSION:-14}-alpine
+    container_name: postgres
     restart: on-failure
     env_file:
       - .env
@@ -20,10 +21,12 @@ services:
     depends_on:
       - postgres
   pgadmin:
+      user: root
       image: dpage/pgadmin4
       restart: always
       volumes:
-        - ./persistent-data/pgadmin:/var/lib/pgadmin
+        - ./persistent-data/pgadmin4:/var/lib/pgadmin
+        - ./servers.json:/pgadmin4/servers.json
       env_file:
         - .env
       ports:

@@ -37,3 +37,6 @@ lerna-debug.log*
 
 # Env files
 *.env
+
+#persistent db data
+persistent-data
