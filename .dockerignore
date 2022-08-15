@@ -1,14 +1,11 @@
-#Ignoring Git
+Dockerfile*
+docker-compose.yaml
 .git
 .cache
 .github
-
-#Ignoring postgres data
 persistent-data
-
-#Ignoring all the markdown
 *.md
-
-#Ignoring Env Example
+.dockerignore
 .env.example
-
+dist
+servers.json
