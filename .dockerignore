@@ -1,0 +1,10 @@
+Dockerfile*
+docker-compose.yaml
+.git
+.cache
+.github
+persistent-data
+*.md
+.dockerignore
+.env.example
+dist

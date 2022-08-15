@@ -1,0 +1,5143 @@
+schema {
+  query: query_root
+  mutation: mutation_root
+  subscription: subscription_root
+}
+
+"""whether this query should be cached (Hasura Cloud only)"""
+directive @cached(
+  """measured in seconds"""
+  ttl: Int! = 60
+
+  """refresh the cache entry"""
+  refresh: Boolean! = false
+) on QUERY
+
+scalar ActionName
+
+"""
+Boolean expression to compare columns of type "ActionName". All fields are combined with logical 'AND'.
+"""
+input ActionName_comparison_exp {
+  _eq: ActionName
+  _gt: ActionName
+  _gte: ActionName
+  _in: [ActionName!]
+  _is_null: Boolean
+  _lt: ActionName
+  _lte: ActionName
+  _neq: ActionName
+  _nin: [ActionName!]
+}
+
+"""
+Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'.
+"""
+input Boolean_comparison_exp {
+  _eq: Boolean
+  _gt: Boolean
+  _gte: Boolean
+  _in: [Boolean!]
+  _is_null: Boolean
+  _lt: Boolean
+  _lte: Boolean
+  _neq: Boolean
+  _nin: [Boolean!]
+}
+
+"""
+Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'.
+"""
+input Int_comparison_exp {
+  _eq: Int
+  _gt: Int
+  _gte: Int
+  _in: [Int!]
+  _is_null: Boolean
+  _lt: Int
+  _lte: Int
+  _neq: Int
+  _nin: [Int!]
+}
+
+"""
+Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'.
+"""
+input String_comparison_exp {
+  _eq: String
+  _gt: String
+  _gte: String
+
+  """does the column match the given case-insensitive pattern"""
+  _ilike: String
+  _in: [String!]
+
+  """
+  does the column match the given POSIX regular expression, case insensitive
+  """
+  _iregex: String
+  _is_null: Boolean
+
+  """does the column match the given pattern"""
+  _like: String
+  _lt: String
+  _lte: String
+  _neq: String
+
+  """does the column NOT match the given case-insensitive pattern"""
+  _nilike: String
+  _nin: [String!]
+
+  """
+  does the column NOT match the given POSIX regular expression, case insensitive
+  """
+  _niregex: String
+
+  """does the column NOT match the given pattern"""
+  _nlike: String
+
+  """
+  does the column NOT match the given POSIX regular expression, case sensitive
+  """
+  _nregex: String
+
+  """does the column NOT match the given SQL regular expression"""
+  _nsimilar: String
+
+  """
+  does the column match the given POSIX regular expression, case sensitive
+  """
+  _regex: String
+
+  """does the column match the given SQL regular expression"""
+  _similar: String
+}
+
+scalar _SmartContractType
+
+"""
+Boolean expression to compare columns of type "_SmartContractType". All fields are combined with logical 'AND'.
+"""
+input _SmartContractType_comparison_exp {
+  _eq: _SmartContractType
+  _gt: _SmartContractType
+  _gte: _SmartContractType
+  _in: [_SmartContractType!]
+  _is_null: Boolean
+  _lt: _SmartContractType
+  _lte: _SmartContractType
+  _neq: _SmartContractType
+  _nin: [_SmartContractType!]
+}
+
+"""
+columns and relationships of "action"
+"""
+type action {
+  action: ActionName!
+  bid_attribute(
+    """JSON select path"""
+    path: String
+  ): jsonb
+  bid_price: numeric
+  block_height: bigint!
+  block_time: timestamp!
+  buyer: String
+
+  """An object relationship"""
+  collection: collection
+  collection_id: uuid
+  commission_id: uuid
+  id: uuid!
+  list_price: numeric
+  market_name: String
+
+  """An object relationship"""
+  marketplace_smart_contract: smart_contract
+  marketplace_smart_contract_id: uuid
+
+  """An object relationship"""
+  nft_meta: nft_meta
+  nft_meta_id: uuid
+  nonce: bigint
+  segment: Boolean!
+  seller: String
+
+  """An object relationship"""
+  smart_contract: smart_contract
+  smart_contract_id: uuid
+  tx_id: String!
+  tx_index: bigint
+  units: Int
+}
+
+"""
+aggregated selection of "action"
+"""
+type action_aggregate {
+  aggregate: action_aggregate_fields
+  nodes: [action!]!
+}
+
+"""
+aggregate fields of "action"
+"""
+type action_aggregate_fields {
+  avg: action_avg_fields
+  count(columns: [action_select_column!], distinct: Boolean): Int!
+  max: action_max_fields
+  min: action_min_fields
+  stddev: action_stddev_fields
+  stddev_pop: action_stddev_pop_fields
+  stddev_samp: action_stddev_samp_fields
+  sum: action_sum_fields
+  var_pop: action_var_pop_fields
+  var_samp: action_var_samp_fields
+  variance: action_variance_fields
+}
+
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input action_append_input {
+  bid_attribute: jsonb
+}
+
+"""aggregate avg on columns"""
+type action_avg_fields {
+  bid_price: Float
+  block_height: Float
+  list_price: Float
+  nonce: Float
+  tx_index: Float
+  units: Float
+}
+
+"""
+Boolean expression to filter rows from the table "action". All fields are combined with a logical 'AND'.
+"""
+input action_bool_exp {
+  _and: [action_bool_exp!]
+  _not: action_bool_exp
+  _or: [action_bool_exp!]
+  action: ActionName_comparison_exp
+  bid_attribute: jsonb_comparison_exp
+  bid_price: numeric_comparison_exp
+  block_height: bigint_comparison_exp
+  block_time: timestamp_comparison_exp
+  buyer: String_comparison_exp
+  collection: collection_bool_exp
+  collection_id: uuid_comparison_exp
+  commission_id: uuid_comparison_exp
+  id: uuid_comparison_exp
+  list_price: numeric_comparison_exp
+  market_name: String_comparison_exp
+  marketplace_smart_contract: smart_contract_bool_exp
+  marketplace_smart_contract_id: uuid_comparison_exp
+  nft_meta: nft_meta_bool_exp
+  nft_meta_id: uuid_comparison_exp
+  nonce: bigint_comparison_exp
+  segment: Boolean_comparison_exp
+  seller: String_comparison_exp
+  smart_contract: smart_contract_bool_exp
+  smart_contract_id: uuid_comparison_exp
+  tx_id: String_comparison_exp
+  tx_index: bigint_comparison_exp
+  units: Int_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "action"
+"""
+enum action_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  action_pkey
+
+  """
+  unique or primary key constraint on columns "tx_id"
+  """
+  action_tx_id_idx
+}
+
+"""
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input action_delete_at_path_input {
+  bid_attribute: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+"""
+input action_delete_elem_input {
+  bid_attribute: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input action_delete_key_input {
+  bid_attribute: String
+}
+
+"""
+input type for incrementing numeric columns in table "action"
+"""
+input action_inc_input {
+  bid_price: numeric
+  block_height: bigint
+  list_price: numeric
+  nonce: bigint
+  tx_index: bigint
+  units: Int
+}
+
+"""
+input type for inserting data into table "action"
+"""
+input action_insert_input {
+  action: ActionName
+  bid_attribute: jsonb
+  bid_price: numeric
+  block_height: bigint
+  block_time: timestamp
+  buyer: String
+  collection: collection_obj_rel_insert_input
+  collection_id: uuid
+  commission_id: uuid
+  id: uuid
+  list_price: numeric
+  market_name: String
+  marketplace_smart_contract: smart_contract_obj_rel_insert_input
+  marketplace_smart_contract_id: uuid
+  nft_meta: nft_meta_obj_rel_insert_input
+  nft_meta_id: uuid
+  nonce: bigint
+  segment: Boolean
+  seller: String
+  smart_contract: smart_contract_obj_rel_insert_input
+  smart_contract_id: uuid
+  tx_id: String
+  tx_index: bigint
+  units: Int
+}
+
+"""aggregate max on columns"""
+type action_max_fields {
+  action: ActionName
+  bid_price: numeric
+  block_height: bigint
+  block_time: timestamp
+  buyer: String
+  collection_id: uuid
+  commission_id: uuid
+  id: uuid
+  list_price: numeric
+  market_name: String
+  marketplace_smart_contract_id: uuid
+  nft_meta_id: uuid
+  nonce: bigint
+  seller: String
+  smart_contract_id: uuid
+  tx_id: String
+  tx_index: bigint
+  units: Int
+}
+
+"""aggregate min on columns"""
+type action_min_fields {
+  action: ActionName
+  bid_price: numeric
+  block_height: bigint
+  block_time: timestamp
+  buyer: String
+  collection_id: uuid
+  commission_id: uuid
+  id: uuid
+  list_price: numeric
+  market_name: String
+  marketplace_smart_contract_id: uuid
+  nft_meta_id: uuid
+  nonce: bigint
+  seller: String
+  smart_contract_id: uuid
+  tx_id: String
+  tx_index: bigint
+  units: Int
+}
+
+"""
+response of any mutation on the table "action"
+"""
+type action_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [action!]!
+}
+
+"""
+on_conflict condition type for table "action"
+"""
+input action_on_conflict {
+  constraint: action_constraint!
+  update_columns: [action_update_column!]! = []
+  where: action_bool_exp
+}
+
+"""Ordering options when selecting data from "action"."""
+input action_order_by {
+  action: order_by
+  bid_attribute: order_by
+  bid_price: order_by
+  block_height: order_by
+  block_time: order_by
+  buyer: order_by
+  collection: collection_order_by
+  collection_id: order_by
+  commission_id: order_by
+  id: order_by
+  list_price: order_by
+  market_name: order_by
+  marketplace_smart_contract: smart_contract_order_by
+  marketplace_smart_contract_id: order_by
+  nft_meta: nft_meta_order_by
+  nft_meta_id: order_by
+  nonce: order_by
+  segment: order_by
+  seller: order_by
+  smart_contract: smart_contract_order_by
+  smart_contract_id: order_by
+  tx_id: order_by
+  tx_index: order_by
+  units: order_by
+}
+
+"""primary key columns input for table: action"""
+input action_pk_columns_input {
+  id: uuid!
+}
+
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input action_prepend_input {
+  bid_attribute: jsonb
+}
+
+"""
+select columns of table "action"
+"""
+enum action_select_column {
+  """column name"""
+  action
+
+  """column name"""
+  bid_attribute
+
+  """column name"""
+  bid_price
+
+  """column name"""
+  block_height
+
+  """column name"""
+  block_time
+
+  """column name"""
+  buyer
+
+  """column name"""
+  collection_id
+
+  """column name"""
+  commission_id
+
+  """column name"""
+  id
+
+  """column name"""
+  list_price
+
+  """column name"""
+  market_name
+
+  """column name"""
+  marketplace_smart_contract_id
+
+  """column name"""
+  nft_meta_id
+
+  """column name"""
+  nonce
+
+  """column name"""
+  segment
+
+  """column name"""
+  seller
+
+  """column name"""
+  smart_contract_id
+
+  """column name"""
+  tx_id
+
+  """column name"""
+  tx_index
+
+  """column name"""
+  units
+}
+
+"""
+input type for updating data in table "action"
+"""
+input action_set_input {
+  action: ActionName
+  bid_attribute: jsonb
+  bid_price: numeric
+  block_height: bigint
+  block_time: timestamp
+  buyer: String
+  collection_id: uuid
+  commission_id: uuid
+  id: uuid
+  list_price: numeric
+  market_name: String
+  marketplace_smart_contract_id: uuid
+  nft_meta_id: uuid
+  nonce: bigint
+  segment: Boolean
+  seller: String
+  smart_contract_id: uuid
+  tx_id: String
+  tx_index: bigint
+  units: Int
+}
+
+"""aggregate stddev on columns"""
+type action_stddev_fields {
+  bid_price: Float
+  block_height: Float
+  list_price: Float
+  nonce: Float
+  tx_index: Float
+  units: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type action_stddev_pop_fields {
+  bid_price: Float
+  block_height: Float
+  list_price: Float
+  nonce: Float
+  tx_index: Float
+  units: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type action_stddev_samp_fields {
+  bid_price: Float
+  block_height: Float
+  list_price: Float
+  nonce: Float
+  tx_index: Float
+  units: Float
+}
+
+"""aggregate sum on columns"""
+type action_sum_fields {
+  bid_price: numeric
+  block_height: bigint
+  list_price: numeric
+  nonce: bigint
+  tx_index: bigint
+  units: Int
+}
+
+"""
+update columns of table "action"
+"""
+enum action_update_column {
+  """column name"""
+  action
+
+  """column name"""
+  bid_attribute
+
+  """column name"""
+  bid_price
+
+  """column name"""
+  block_height
+
+  """column name"""
+  block_time
+
+  """column name"""
+  buyer
+
+  """column name"""
+  collection_id
+
+  """column name"""
+  commission_id
+
+  """column name"""
+  id
+
+  """column name"""
+  list_price
+
+  """column name"""
+  market_name
+
+  """column name"""
+  marketplace_smart_contract_id
+
+  """column name"""
+  nft_meta_id
+
+  """column name"""
+  nonce
+
+  """column name"""
+  segment
+
+  """column name"""
+  seller
+
+  """column name"""
+  smart_contract_id
+
+  """column name"""
+  tx_id
+
+  """column name"""
+  tx_index
+
+  """column name"""
+  units
+}
+
+input action_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: action_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: action_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+  """
+  _delete_elem: action_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: action_delete_key_input
+
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: action_inc_input
+
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: action_prepend_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: action_set_input
+  where: action_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type action_var_pop_fields {
+  bid_price: Float
+  block_height: Float
+  list_price: Float
+  nonce: Float
+  tx_index: Float
+  units: Float
+}
+
+"""aggregate var_samp on columns"""
+type action_var_samp_fields {
+  bid_price: Float
+  block_height: Float
+  list_price: Float
+  nonce: Float
+  tx_index: Float
+  units: Float
+}
+
+"""aggregate variance on columns"""
+type action_variance_fields {
+  bid_price: Float
+  block_height: Float
+  list_price: Float
+  nonce: Float
+  tx_index: Float
+  units: Float
+}
+
+scalar bigint
+
+"""
+Boolean expression to compare columns of type "bigint". All fields are combined with logical 'AND'.
+"""
+input bigint_comparison_exp {
+  _eq: bigint
+  _gt: bigint
+  _gte: bigint
+  _in: [bigint!]
+  _is_null: Boolean
+  _lt: bigint
+  _lte: bigint
+  _neq: bigint
+  _nin: [bigint!]
+}
+
+"""
+columns and relationships of "collection"
+"""
+type collection {
+  collection_scrape_id: uuid
+  collection_size: numeric
+  cover_image: String
+  created_at: timestamp!
+  description: String
+  external_url: String
+  floor: numeric!
+  id: uuid!
+
+  """An array relationship"""
+  nft_meta(
+    """distinct select on columns"""
+    distinct_on: [nft_meta_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [nft_meta_order_by!]
+
+    """filter the rows returned"""
+    where: nft_meta_bool_exp
+  ): [nft_meta!]!
+
+  """An aggregate relationship"""
+  nft_meta_aggregate(
+    """distinct select on columns"""
+    distinct_on: [nft_meta_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [nft_meta_order_by!]
+
+    """filter the rows returned"""
+    where: nft_meta_bool_exp
+  ): nft_meta_aggregate!
+  slug: String
+
+  """An object relationship"""
+  smart_contract: smart_contract
+  smart_contract_id: uuid
+  title: String
+  trending: Boolean!
+  updated_at: timestamp!
+  volume: numeric!
+}
+
+"""
+aggregated selection of "collection"
+"""
+type collection_aggregate {
+  aggregate: collection_aggregate_fields
+  nodes: [collection!]!
+}
+
+"""
+aggregate fields of "collection"
+"""
+type collection_aggregate_fields {
+  avg: collection_avg_fields
+  count(columns: [collection_select_column!], distinct: Boolean): Int!
+  max: collection_max_fields
+  min: collection_min_fields
+  stddev: collection_stddev_fields
+  stddev_pop: collection_stddev_pop_fields
+  stddev_samp: collection_stddev_samp_fields
+  sum: collection_sum_fields
+  var_pop: collection_var_pop_fields
+  var_samp: collection_var_samp_fields
+  variance: collection_variance_fields
+}
+
+"""
+columns and relationships of "collection_attribute"
+"""
+type collection_attribute {
+  """An object relationship"""
+  collection: collection!
+  collection_id: uuid!
+  created_at: timestamp!
+  id: uuid!
+  rarity: float8!
+  trait_type: String!
+  updated_at: timestamp!
+  value: String!
+}
+
+"""
+aggregated selection of "collection_attribute"
+"""
+type collection_attribute_aggregate {
+  aggregate: collection_attribute_aggregate_fields
+  nodes: [collection_attribute!]!
+}
+
+"""
+aggregate fields of "collection_attribute"
+"""
+type collection_attribute_aggregate_fields {
+  avg: collection_attribute_avg_fields
+  count(columns: [collection_attribute_select_column!], distinct: Boolean): Int!
+  max: collection_attribute_max_fields
+  min: collection_attribute_min_fields
+  stddev: collection_attribute_stddev_fields
+  stddev_pop: collection_attribute_stddev_pop_fields
+  stddev_samp: collection_attribute_stddev_samp_fields
+  sum: collection_attribute_sum_fields
+  var_pop: collection_attribute_var_pop_fields
+  var_samp: collection_attribute_var_samp_fields
+  variance: collection_attribute_variance_fields
+}
+
+"""aggregate avg on columns"""
+type collection_attribute_avg_fields {
+  rarity: Float
+}
+
+"""
+Boolean expression to filter rows from the table "collection_attribute". All fields are combined with a logical 'AND'.
+"""
+input collection_attribute_bool_exp {
+  _and: [collection_attribute_bool_exp!]
+  _not: collection_attribute_bool_exp
+  _or: [collection_attribute_bool_exp!]
+  collection: collection_bool_exp
+  collection_id: uuid_comparison_exp
+  created_at: timestamp_comparison_exp
+  id: uuid_comparison_exp
+  rarity: float8_comparison_exp
+  trait_type: String_comparison_exp
+  updated_at: timestamp_comparison_exp
+  value: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "collection_attribute"
+"""
+enum collection_attribute_constraint {
+  """
+  unique or primary key constraint on columns "collection_id", "trait_type", "value"
+  """
+  collection_attribute_collection_id_trait_type_value_key
+
+  """
+  unique or primary key constraint on columns "id"
+  """
+  collection_attribute_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "collection_attribute"
+"""
+input collection_attribute_inc_input {
+  rarity: float8
+}
+
+"""
+input type for inserting data into table "collection_attribute"
+"""
+input collection_attribute_insert_input {
+  collection: collection_obj_rel_insert_input
+  collection_id: uuid
+  created_at: timestamp
+  id: uuid
+  rarity: float8
+  trait_type: String
+  updated_at: timestamp
+  value: String
+}
+
+"""aggregate max on columns"""
+type collection_attribute_max_fields {
+  collection_id: uuid
+  created_at: timestamp
+  id: uuid
+  rarity: float8
+  trait_type: String
+  updated_at: timestamp
+  value: String
+}
+
+"""aggregate min on columns"""
+type collection_attribute_min_fields {
+  collection_id: uuid
+  created_at: timestamp
+  id: uuid
+  rarity: float8
+  trait_type: String
+  updated_at: timestamp
+  value: String
+}
+
+"""
+response of any mutation on the table "collection_attribute"
+"""
+type collection_attribute_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [collection_attribute!]!
+}
+
+"""
+on_conflict condition type for table "collection_attribute"
+"""
+input collection_attribute_on_conflict {
+  constraint: collection_attribute_constraint!
+  update_columns: [collection_attribute_update_column!]! = []
+  where: collection_attribute_bool_exp
+}
+
+"""Ordering options when selecting data from "collection_attribute"."""
+input collection_attribute_order_by {
+  collection: collection_order_by
+  collection_id: order_by
+  created_at: order_by
+  id: order_by
+  rarity: order_by
+  trait_type: order_by
+  updated_at: order_by
+  value: order_by
+}
+
+"""primary key columns input for table: collection_attribute"""
+input collection_attribute_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "collection_attribute"
+"""
+enum collection_attribute_select_column {
+  """column name"""
+  collection_id
+
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  rarity
+
+  """column name"""
+  trait_type
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  value
+}
+
+"""
+input type for updating data in table "collection_attribute"
+"""
+input collection_attribute_set_input {
+  collection_id: uuid
+  created_at: timestamp
+  id: uuid
+  rarity: float8
+  trait_type: String
+  updated_at: timestamp
+  value: String
+}
+
+"""aggregate stddev on columns"""
+type collection_attribute_stddev_fields {
+  rarity: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type collection_attribute_stddev_pop_fields {
+  rarity: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type collection_attribute_stddev_samp_fields {
+  rarity: Float
+}
+
+"""aggregate sum on columns"""
+type collection_attribute_sum_fields {
+  rarity: float8
+}
+
+"""
+update columns of table "collection_attribute"
+"""
+enum collection_attribute_update_column {
+  """column name"""
+  collection_id
+
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  rarity
+
+  """column name"""
+  trait_type
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  value
+}
+
+input collection_attribute_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: collection_attribute_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: collection_attribute_set_input
+  where: collection_attribute_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type collection_attribute_var_pop_fields {
+  rarity: Float
+}
+
+"""aggregate var_samp on columns"""
+type collection_attribute_var_samp_fields {
+  rarity: Float
+}
+
+"""aggregate variance on columns"""
+type collection_attribute_variance_fields {
+  rarity: Float
+}
+
+"""aggregate avg on columns"""
+type collection_avg_fields {
+  collection_size: Float
+  floor: Float
+  volume: Float
+}
+
+"""
+Boolean expression to filter rows from the table "collection". All fields are combined with a logical 'AND'.
+"""
+input collection_bool_exp {
+  _and: [collection_bool_exp!]
+  _not: collection_bool_exp
+  _or: [collection_bool_exp!]
+  collection_scrape_id: uuid_comparison_exp
+  collection_size: numeric_comparison_exp
+  cover_image: String_comparison_exp
+  created_at: timestamp_comparison_exp
+  description: String_comparison_exp
+  external_url: String_comparison_exp
+  floor: numeric_comparison_exp
+  id: uuid_comparison_exp
+  nft_meta: nft_meta_bool_exp
+  slug: String_comparison_exp
+  smart_contract: smart_contract_bool_exp
+  smart_contract_id: uuid_comparison_exp
+  title: String_comparison_exp
+  trending: Boolean_comparison_exp
+  updated_at: timestamp_comparison_exp
+  volume: numeric_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "collection"
+"""
+enum collection_constraint {
+  """
+  unique or primary key constraint on columns "collection_scrape_id"
+  """
+  collection_collection_scrape_id_key
+
+  """
+  unique or primary key constraint on columns "id"
+  """
+  collection_pkey
+
+  """
+  unique or primary key constraint on columns "slug"
+  """
+  collection_slug_key
+}
+
+"""
+input type for incrementing numeric columns in table "collection"
+"""
+input collection_inc_input {
+  collection_size: numeric
+  floor: numeric
+  volume: numeric
+}
+
+"""
+input type for inserting data into table "collection"
+"""
+input collection_insert_input {
+  collection_scrape_id: uuid
+  collection_size: numeric
+  cover_image: String
+  created_at: timestamp
+  description: String
+  external_url: String
+  floor: numeric
+  id: uuid
+  nft_meta: nft_meta_arr_rel_insert_input
+  slug: String
+  smart_contract: smart_contract_obj_rel_insert_input
+  smart_contract_id: uuid
+  title: String
+  trending: Boolean
+  updated_at: timestamp
+  volume: numeric
+}
+
+"""aggregate max on columns"""
+type collection_max_fields {
+  collection_scrape_id: uuid
+  collection_size: numeric
+  cover_image: String
+  created_at: timestamp
+  description: String
+  external_url: String
+  floor: numeric
+  id: uuid
+  slug: String
+  smart_contract_id: uuid
+  title: String
+  updated_at: timestamp
+  volume: numeric
+}
+
+"""aggregate min on columns"""
+type collection_min_fields {
+  collection_scrape_id: uuid
+  collection_size: numeric
+  cover_image: String
+  created_at: timestamp
+  description: String
+  external_url: String
+  floor: numeric
+  id: uuid
+  slug: String
+  smart_contract_id: uuid
+  title: String
+  updated_at: timestamp
+  volume: numeric
+}
+
+"""
+response of any mutation on the table "collection"
+"""
+type collection_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [collection!]!
+}
+
+"""
+input type for inserting object relation for remote table "collection"
+"""
+input collection_obj_rel_insert_input {
+  data: collection_insert_input!
+
+  """upsert condition"""
+  on_conflict: collection_on_conflict
+}
+
+"""
+on_conflict condition type for table "collection"
+"""
+input collection_on_conflict {
+  constraint: collection_constraint!
+  update_columns: [collection_update_column!]! = []
+  where: collection_bool_exp
+}
+
+"""Ordering options when selecting data from "collection"."""
+input collection_order_by {
+  collection_scrape_id: order_by
+  collection_size: order_by
+  cover_image: order_by
+  created_at: order_by
+  description: order_by
+  external_url: order_by
+  floor: order_by
+  id: order_by
+  nft_meta_aggregate: nft_meta_aggregate_order_by
+  slug: order_by
+  smart_contract: smart_contract_order_by
+  smart_contract_id: order_by
+  title: order_by
+  trending: order_by
+  updated_at: order_by
+  volume: order_by
+}
+
+"""primary key columns input for table: collection"""
+input collection_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "collection"
+"""
+enum collection_select_column {
+  """column name"""
+  collection_scrape_id
+
+  """column name"""
+  collection_size
+
+  """column name"""
+  cover_image
+
+  """column name"""
+  created_at
+
+  """column name"""
+  description
+
+  """column name"""
+  external_url
+
+  """column name"""
+  floor
+
+  """column name"""
+  id
+
+  """column name"""
+  slug
+
+  """column name"""
+  smart_contract_id
+
+  """column name"""
+  title
+
+  """column name"""
+  trending
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  volume
+}
+
+"""
+input type for updating data in table "collection"
+"""
+input collection_set_input {
+  collection_scrape_id: uuid
+  collection_size: numeric
+  cover_image: String
+  created_at: timestamp
+  description: String
+  external_url: String
+  floor: numeric
+  id: uuid
+  slug: String
+  smart_contract_id: uuid
+  title: String
+  trending: Boolean
+  updated_at: timestamp
+  volume: numeric
+}
+
+"""aggregate stddev on columns"""
+type collection_stddev_fields {
+  collection_size: Float
+  floor: Float
+  volume: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type collection_stddev_pop_fields {
+  collection_size: Float
+  floor: Float
+  volume: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type collection_stddev_samp_fields {
+  collection_size: Float
+  floor: Float
+  volume: Float
+}
+
+"""aggregate sum on columns"""
+type collection_sum_fields {
+  collection_size: numeric
+  floor: numeric
+  volume: numeric
+}
+
+"""
+update columns of table "collection"
+"""
+enum collection_update_column {
+  """column name"""
+  collection_scrape_id
+
+  """column name"""
+  collection_size
+
+  """column name"""
+  cover_image
+
+  """column name"""
+  created_at
+
+  """column name"""
+  description
+
+  """column name"""
+  external_url
+
+  """column name"""
+  floor
+
+  """column name"""
+  id
+
+  """column name"""
+  slug
+
+  """column name"""
+  smart_contract_id
+
+  """column name"""
+  title
+
+  """column name"""
+  trending
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  volume
+}
+
+input collection_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: collection_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: collection_set_input
+  where: collection_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type collection_var_pop_fields {
+  collection_size: Float
+  floor: Float
+  volume: Float
+}
+
+"""aggregate var_samp on columns"""
+type collection_var_samp_fields {
+  collection_size: Float
+  floor: Float
+  volume: Float
+}
+
+"""aggregate variance on columns"""
+type collection_variance_fields {
+  collection_size: Float
+  floor: Float
+  volume: Float
+}
+
+scalar float8
+
+"""
+Boolean expression to compare columns of type "float8". All fields are combined with logical 'AND'.
+"""
+input float8_comparison_exp {
+  _eq: float8
+  _gt: float8
+  _gte: float8
+  _in: [float8!]
+  _is_null: Boolean
+  _lt: float8
+  _lte: float8
+  _neq: float8
+  _nin: [float8!]
+}
+
+scalar jsonb
+
+input jsonb_cast_exp {
+  String: String_comparison_exp
+}
+
+"""
+Boolean expression to compare columns of type "jsonb". All fields are combined with logical 'AND'.
+"""
+input jsonb_comparison_exp {
+  _cast: jsonb_cast_exp
+
+  """is the column contained in the given json value"""
+  _contained_in: jsonb
+
+  """does the column contain the given json value at the top level"""
+  _contains: jsonb
+  _eq: jsonb
+  _gt: jsonb
+  _gte: jsonb
+
+  """does the string exist as a top-level key in the column"""
+  _has_key: String
+
+  """do all of these strings exist as top-level keys in the column"""
+  _has_keys_all: [String!]
+
+  """do any of these strings exist as top-level keys in the column"""
+  _has_keys_any: [String!]
+  _in: [jsonb!]
+  _is_null: Boolean
+  _lt: jsonb
+  _lte: jsonb
+  _neq: jsonb
+  _nin: [jsonb!]
+}
+
+"""mutation root"""
+type mutation_root {
+  """
+  delete data from the table: "action"
+  """
+  delete_action(
+    """filter the rows which have to be deleted"""
+    where: action_bool_exp!
+  ): action_mutation_response
+
+  """
+  delete single row from the table: "action"
+  """
+  delete_action_by_pk(id: uuid!): action
+
+  """
+  delete data from the table: "collection"
+  """
+  delete_collection(
+    """filter the rows which have to be deleted"""
+    where: collection_bool_exp!
+  ): collection_mutation_response
+
+  """
+  delete data from the table: "collection_attribute"
+  """
+  delete_collection_attribute(
+    """filter the rows which have to be deleted"""
+    where: collection_attribute_bool_exp!
+  ): collection_attribute_mutation_response
+
+  """
+  delete single row from the table: "collection_attribute"
+  """
+  delete_collection_attribute_by_pk(id: uuid!): collection_attribute
+
+  """
+  delete single row from the table: "collection"
+  """
+  delete_collection_by_pk(id: uuid!): collection
+
+  """
+  delete data from the table: "nft_meta"
+  """
+  delete_nft_meta(
+    """filter the rows which have to be deleted"""
+    where: nft_meta_bool_exp!
+  ): nft_meta_mutation_response
+
+  """
+  delete data from the table: "nft_meta_attribute"
+  """
+  delete_nft_meta_attribute(
+    """filter the rows which have to be deleted"""
+    where: nft_meta_attribute_bool_exp!
+  ): nft_meta_attribute_mutation_response
+
+  """
+  delete single row from the table: "nft_meta_attribute"
+  """
+  delete_nft_meta_attribute_by_pk(id: uuid!): nft_meta_attribute
+
+  """
+  delete single row from the table: "nft_meta"
+  """
+  delete_nft_meta_by_pk(id: uuid!): nft_meta
+
+  """
+  delete data from the table: "nft_state"
+  """
+  delete_nft_state(
+    """filter the rows which have to be deleted"""
+    where: nft_state_bool_exp!
+  ): nft_state_mutation_response
+
+  """
+  delete single row from the table: "nft_state"
+  """
+  delete_nft_state_by_pk(id: uuid!): nft_state
+
+  """
+  delete data from the table: "smart_contract"
+  """
+  delete_smart_contract(
+    """filter the rows which have to be deleted"""
+    where: smart_contract_bool_exp!
+  ): smart_contract_mutation_response
+
+  """
+  delete single row from the table: "smart_contract"
+  """
+  delete_smart_contract_by_pk(id: uuid!): smart_contract
+
+  """
+  insert data into the table: "action"
+  """
+  insert_action(
+    """the rows to be inserted"""
+    objects: [action_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: action_on_conflict
+  ): action_mutation_response
+
+  """
+  insert a single row into the table: "action"
+  """
+  insert_action_one(
+    """the row to be inserted"""
+    object: action_insert_input!
+
+    """upsert condition"""
+    on_conflict: action_on_conflict
+  ): action
+
+  """
+  insert data into the table: "collection"
+  """
+  insert_collection(
+    """the rows to be inserted"""
+    objects: [collection_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: collection_on_conflict
+  ): collection_mutation_response
+
+  """
+  insert data into the table: "collection_attribute"
+  """
+  insert_collection_attribute(
+    """the rows to be inserted"""
+    objects: [collection_attribute_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: collection_attribute_on_conflict
+  ): collection_attribute_mutation_response
+
+  """
+  insert a single row into the table: "collection_attribute"
+  """
+  insert_collection_attribute_one(
+    """the row to be inserted"""
+    object: collection_attribute_insert_input!
+
+    """upsert condition"""
+    on_conflict: collection_attribute_on_conflict
+  ): collection_attribute
+
+  """
+  insert a single row into the table: "collection"
+  """
+  insert_collection_one(
+    """the row to be inserted"""
+    object: collection_insert_input!
+
+    """upsert condition"""
+    on_conflict: collection_on_conflict
+  ): collection
+
+  """
+  insert data into the table: "nft_meta"
+  """
+  insert_nft_meta(
+    """the rows to be inserted"""
+    objects: [nft_meta_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: nft_meta_on_conflict
+  ): nft_meta_mutation_response
+
+  """
+  insert data into the table: "nft_meta_attribute"
+  """
+  insert_nft_meta_attribute(
+    """the rows to be inserted"""
+    objects: [nft_meta_attribute_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: nft_meta_attribute_on_conflict
+  ): nft_meta_attribute_mutation_response
+
+  """
+  insert a single row into the table: "nft_meta_attribute"
+  """
+  insert_nft_meta_attribute_one(
+    """the row to be inserted"""
+    object: nft_meta_attribute_insert_input!
+
+    """upsert condition"""
+    on_conflict: nft_meta_attribute_on_conflict
+  ): nft_meta_attribute
+
+  """
+  insert a single row into the table: "nft_meta"
+  """
+  insert_nft_meta_one(
+    """the row to be inserted"""
+    object: nft_meta_insert_input!
+
+    """upsert condition"""
+    on_conflict: nft_meta_on_conflict
+  ): nft_meta
+
+  """
+  insert data into the table: "nft_state"
+  """
+  insert_nft_state(
+    """the rows to be inserted"""
+    objects: [nft_state_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: nft_state_on_conflict
+  ): nft_state_mutation_response
+
+  """
+  insert a single row into the table: "nft_state"
+  """
+  insert_nft_state_one(
+    """the row to be inserted"""
+    object: nft_state_insert_input!
+
+    """upsert condition"""
+    on_conflict: nft_state_on_conflict
+  ): nft_state
+
+  """
+  insert data into the table: "smart_contract"
+  """
+  insert_smart_contract(
+    """the rows to be inserted"""
+    objects: [smart_contract_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: smart_contract_on_conflict
+  ): smart_contract_mutation_response
+
+  """
+  insert a single row into the table: "smart_contract"
+  """
+  insert_smart_contract_one(
+    """the row to be inserted"""
+    object: smart_contract_insert_input!
+
+    """upsert condition"""
+    on_conflict: smart_contract_on_conflict
+  ): smart_contract
+
+  """
+  update data of the table: "action"
+  """
+  update_action(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: action_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: action_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+    """
+    _delete_elem: action_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: action_delete_key_input
+
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: action_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: action_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: action_set_input
+
+    """filter the rows which have to be updated"""
+    where: action_bool_exp!
+  ): action_mutation_response
+
+  """
+  update single row of the table: "action"
+  """
+  update_action_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: action_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: action_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+    """
+    _delete_elem: action_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: action_delete_key_input
+
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: action_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: action_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: action_set_input
+    pk_columns: action_pk_columns_input!
+  ): action
+
+  """
+  update multiples rows of table: "action"
+  """
+  update_action_many(
+    """updates to execute, in order"""
+    updates: [action_updates!]!
+  ): [action_mutation_response]
+
+  """
+  update data of the table: "collection"
+  """
+  update_collection(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: collection_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: collection_set_input
+
+    """filter the rows which have to be updated"""
+    where: collection_bool_exp!
+  ): collection_mutation_response
+
+  """
+  update data of the table: "collection_attribute"
+  """
+  update_collection_attribute(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: collection_attribute_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: collection_attribute_set_input
+
+    """filter the rows which have to be updated"""
+    where: collection_attribute_bool_exp!
+  ): collection_attribute_mutation_response
+
+  """
+  update single row of the table: "collection_attribute"
+  """
+  update_collection_attribute_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: collection_attribute_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: collection_attribute_set_input
+    pk_columns: collection_attribute_pk_columns_input!
+  ): collection_attribute
+
+  """
+  update multiples rows of table: "collection_attribute"
+  """
+  update_collection_attribute_many(
+    """updates to execute, in order"""
+    updates: [collection_attribute_updates!]!
+  ): [collection_attribute_mutation_response]
+
+  """
+  update single row of the table: "collection"
+  """
+  update_collection_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: collection_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: collection_set_input
+    pk_columns: collection_pk_columns_input!
+  ): collection
+
+  """
+  update multiples rows of table: "collection"
+  """
+  update_collection_many(
+    """updates to execute, in order"""
+    updates: [collection_updates!]!
+  ): [collection_mutation_response]
+
+  """
+  update data of the table: "nft_meta"
+  """
+  update_nft_meta(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: nft_meta_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: nft_meta_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+    """
+    _delete_elem: nft_meta_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: nft_meta_delete_key_input
+
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: nft_meta_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: nft_meta_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: nft_meta_set_input
+
+    """filter the rows which have to be updated"""
+    where: nft_meta_bool_exp!
+  ): nft_meta_mutation_response
+
+  """
+  update data of the table: "nft_meta_attribute"
+  """
+  update_nft_meta_attribute(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: nft_meta_attribute_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: nft_meta_attribute_set_input
+
+    """filter the rows which have to be updated"""
+    where: nft_meta_attribute_bool_exp!
+  ): nft_meta_attribute_mutation_response
+
+  """
+  update single row of the table: "nft_meta_attribute"
+  """
+  update_nft_meta_attribute_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: nft_meta_attribute_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: nft_meta_attribute_set_input
+    pk_columns: nft_meta_attribute_pk_columns_input!
+  ): nft_meta_attribute
+
+  """
+  update multiples rows of table: "nft_meta_attribute"
+  """
+  update_nft_meta_attribute_many(
+    """updates to execute, in order"""
+    updates: [nft_meta_attribute_updates!]!
+  ): [nft_meta_attribute_mutation_response]
+
+  """
+  update single row of the table: "nft_meta"
+  """
+  update_nft_meta_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: nft_meta_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: nft_meta_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+    """
+    _delete_elem: nft_meta_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: nft_meta_delete_key_input
+
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: nft_meta_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: nft_meta_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: nft_meta_set_input
+    pk_columns: nft_meta_pk_columns_input!
+  ): nft_meta
+
+  """
+  update multiples rows of table: "nft_meta"
+  """
+  update_nft_meta_many(
+    """updates to execute, in order"""
+    updates: [nft_meta_updates!]!
+  ): [nft_meta_mutation_response]
+
+  """
+  update data of the table: "nft_state"
+  """
+  update_nft_state(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: nft_state_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: nft_state_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+    """
+    _delete_elem: nft_state_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: nft_state_delete_key_input
+
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: nft_state_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: nft_state_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: nft_state_set_input
+
+    """filter the rows which have to be updated"""
+    where: nft_state_bool_exp!
+  ): nft_state_mutation_response
+
+  """
+  update single row of the table: "nft_state"
+  """
+  update_nft_state_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: nft_state_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: nft_state_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+    """
+    _delete_elem: nft_state_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: nft_state_delete_key_input
+
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: nft_state_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: nft_state_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: nft_state_set_input
+    pk_columns: nft_state_pk_columns_input!
+  ): nft_state
+
+  """
+  update multiples rows of table: "nft_state"
+  """
+  update_nft_state_many(
+    """updates to execute, in order"""
+    updates: [nft_state_updates!]!
+  ): [nft_state_mutation_response]
+
+  """
+  update data of the table: "smart_contract"
+  """
+  update_smart_contract(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: smart_contract_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: smart_contract_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+    """
+    _delete_elem: smart_contract_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: smart_contract_delete_key_input
+
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: smart_contract_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: smart_contract_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: smart_contract_set_input
+
+    """filter the rows which have to be updated"""
+    where: smart_contract_bool_exp!
+  ): smart_contract_mutation_response
+
+  """
+  update single row of the table: "smart_contract"
+  """
+  update_smart_contract_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: smart_contract_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: smart_contract_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+    """
+    _delete_elem: smart_contract_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: smart_contract_delete_key_input
+
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: smart_contract_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: smart_contract_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: smart_contract_set_input
+    pk_columns: smart_contract_pk_columns_input!
+  ): smart_contract
+
+  """
+  update multiples rows of table: "smart_contract"
+  """
+  update_smart_contract_many(
+    """updates to execute, in order"""
+    updates: [smart_contract_updates!]!
+  ): [smart_contract_mutation_response]
+}
+
+"""
+columns and relationships of "nft_meta"
+"""
+type nft_meta {
+  asset_name: String
+  chain_id: uuid!
+  chain_locked: Boolean
+
+  """An object relationship"""
+  collection: collection
+  collection_id: uuid
+  created_at: timestamp!
+  grouping: String
+  id: uuid!
+  image: String!
+  json_meta(
+    """JSON select path"""
+    path: String
+  ): jsonb
+  name: String!
+
+  """An array relationship"""
+  nft_meta_attributes(
+    """distinct select on columns"""
+    distinct_on: [nft_meta_attribute_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [nft_meta_attribute_order_by!]
+
+    """filter the rows returned"""
+    where: nft_meta_attribute_bool_exp
+  ): [nft_meta_attribute!]!
+
+  """An aggregate relationship"""
+  nft_meta_attributes_aggregate(
+    """distinct select on columns"""
+    distinct_on: [nft_meta_attribute_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [nft_meta_attribute_order_by!]
+
+    """filter the rows returned"""
+    where: nft_meta_attribute_bool_exp
+  ): nft_meta_attribute_aggregate!
+
+  """An array relationship"""
+  nft_state(
+    """distinct select on columns"""
+    distinct_on: [nft_state_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [nft_state_order_by!]
+
+    """filter the rows returned"""
+    where: nft_state_bool_exp
+  ): [nft_state!]!
+
+  """An aggregate relationship"""
+  nft_state_aggregate(
+    """distinct select on columns"""
+    distinct_on: [nft_state_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [nft_state_order_by!]
+
+    """filter the rows returned"""
+    where: nft_state_bool_exp
+  ): nft_state_aggregate!
+  ranking: Int
+  rarity: float8
+  smart_contract_id: uuid!
+  token_id: String!
+  token_id_numeric: numeric
+  updated_at: timestamp!
+  uuid: String!
+}
+
+"""
+aggregated selection of "nft_meta"
+"""
+type nft_meta_aggregate {
+  aggregate: nft_meta_aggregate_fields
+  nodes: [nft_meta!]!
+}
+
+"""
+aggregate fields of "nft_meta"
+"""
+type nft_meta_aggregate_fields {
+  avg: nft_meta_avg_fields
+  count(columns: [nft_meta_select_column!], distinct: Boolean): Int!
+  max: nft_meta_max_fields
+  min: nft_meta_min_fields
+  stddev: nft_meta_stddev_fields
+  stddev_pop: nft_meta_stddev_pop_fields
+  stddev_samp: nft_meta_stddev_samp_fields
+  sum: nft_meta_sum_fields
+  var_pop: nft_meta_var_pop_fields
+  var_samp: nft_meta_var_samp_fields
+  variance: nft_meta_variance_fields
+}
+
+"""
+order by aggregate values of table "nft_meta"
+"""
+input nft_meta_aggregate_order_by {
+  avg: nft_meta_avg_order_by
+  count: order_by
+  max: nft_meta_max_order_by
+  min: nft_meta_min_order_by
+  stddev: nft_meta_stddev_order_by
+  stddev_pop: nft_meta_stddev_pop_order_by
+  stddev_samp: nft_meta_stddev_samp_order_by
+  sum: nft_meta_sum_order_by
+  var_pop: nft_meta_var_pop_order_by
+  var_samp: nft_meta_var_samp_order_by
+  variance: nft_meta_variance_order_by
+}
+
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input nft_meta_append_input {
+  json_meta: jsonb
+}
+
+"""
+input type for inserting array relation for remote table "nft_meta"
+"""
+input nft_meta_arr_rel_insert_input {
+  data: [nft_meta_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: nft_meta_on_conflict
+}
+
+"""
+columns and relationships of "nft_meta_attribute"
+"""
+type nft_meta_attribute {
+  created_at: timestamp!
+  id: uuid!
+  meta_id: uuid!
+
+  """An object relationship"""
+  nft_meta: nft_meta!
+  rarity: float8!
+  score: float8!
+  trait_type: String!
+  updated_at: timestamp!
+  value: String!
+}
+
+"""
+aggregated selection of "nft_meta_attribute"
+"""
+type nft_meta_attribute_aggregate {
+  aggregate: nft_meta_attribute_aggregate_fields
+  nodes: [nft_meta_attribute!]!
+}
+
+"""
+aggregate fields of "nft_meta_attribute"
+"""
+type nft_meta_attribute_aggregate_fields {
+  avg: nft_meta_attribute_avg_fields
+  count(columns: [nft_meta_attribute_select_column!], distinct: Boolean): Int!
+  max: nft_meta_attribute_max_fields
+  min: nft_meta_attribute_min_fields
+  stddev: nft_meta_attribute_stddev_fields
+  stddev_pop: nft_meta_attribute_stddev_pop_fields
+  stddev_samp: nft_meta_attribute_stddev_samp_fields
+  sum: nft_meta_attribute_sum_fields
+  var_pop: nft_meta_attribute_var_pop_fields
+  var_samp: nft_meta_attribute_var_samp_fields
+  variance: nft_meta_attribute_variance_fields
+}
+
+"""
+order by aggregate values of table "nft_meta_attribute"
+"""
+input nft_meta_attribute_aggregate_order_by {
+  avg: nft_meta_attribute_avg_order_by
+  count: order_by
+  max: nft_meta_attribute_max_order_by
+  min: nft_meta_attribute_min_order_by
+  stddev: nft_meta_attribute_stddev_order_by
+  stddev_pop: nft_meta_attribute_stddev_pop_order_by
+  stddev_samp: nft_meta_attribute_stddev_samp_order_by
+  sum: nft_meta_attribute_sum_order_by
+  var_pop: nft_meta_attribute_var_pop_order_by
+  var_samp: nft_meta_attribute_var_samp_order_by
+  variance: nft_meta_attribute_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "nft_meta_attribute"
+"""
+input nft_meta_attribute_arr_rel_insert_input {
+  data: [nft_meta_attribute_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: nft_meta_attribute_on_conflict
+}
+
+"""aggregate avg on columns"""
+type nft_meta_attribute_avg_fields {
+  rarity: Float
+  score: Float
+}
+
+"""
+order by avg() on columns of table "nft_meta_attribute"
+"""
+input nft_meta_attribute_avg_order_by {
+  rarity: order_by
+  score: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "nft_meta_attribute". All fields are combined with a logical 'AND'.
+"""
+input nft_meta_attribute_bool_exp {
+  _and: [nft_meta_attribute_bool_exp!]
+  _not: nft_meta_attribute_bool_exp
+  _or: [nft_meta_attribute_bool_exp!]
+  created_at: timestamp_comparison_exp
+  id: uuid_comparison_exp
+  meta_id: uuid_comparison_exp
+  nft_meta: nft_meta_bool_exp
+  rarity: float8_comparison_exp
+  score: float8_comparison_exp
+  trait_type: String_comparison_exp
+  updated_at: timestamp_comparison_exp
+  value: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "nft_meta_attribute"
+"""
+enum nft_meta_attribute_constraint {
+  """
+  unique or primary key constraint on columns "meta_id", "trait_type", "value"
+  """
+  nft_meta_attribute_meta_id_trait_type_value_key
+
+  """
+  unique or primary key constraint on columns "id"
+  """
+  nft_meta_attribute_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "nft_meta_attribute"
+"""
+input nft_meta_attribute_inc_input {
+  rarity: float8
+  score: float8
+}
+
+"""
+input type for inserting data into table "nft_meta_attribute"
+"""
+input nft_meta_attribute_insert_input {
+  created_at: timestamp
+  id: uuid
+  meta_id: uuid
+  nft_meta: nft_meta_obj_rel_insert_input
+  rarity: float8
+  score: float8
+  trait_type: String
+  updated_at: timestamp
+  value: String
+}
+
+"""aggregate max on columns"""
+type nft_meta_attribute_max_fields {
+  created_at: timestamp
+  id: uuid
+  meta_id: uuid
+  rarity: float8
+  score: float8
+  trait_type: String
+  updated_at: timestamp
+  value: String
+}
+
+"""
+order by max() on columns of table "nft_meta_attribute"
+"""
+input nft_meta_attribute_max_order_by {
+  created_at: order_by
+  id: order_by
+  meta_id: order_by
+  rarity: order_by
+  score: order_by
+  trait_type: order_by
+  updated_at: order_by
+  value: order_by
+}
+
+"""aggregate min on columns"""
+type nft_meta_attribute_min_fields {
+  created_at: timestamp
+  id: uuid
+  meta_id: uuid
+  rarity: float8
+  score: float8
+  trait_type: String
+  updated_at: timestamp
+  value: String
+}
+
+"""
+order by min() on columns of table "nft_meta_attribute"
+"""
+input nft_meta_attribute_min_order_by {
+  created_at: order_by
+  id: order_by
+  meta_id: order_by
+  rarity: order_by
+  score: order_by
+  trait_type: order_by
+  updated_at: order_by
+  value: order_by
+}
+
+"""
+response of any mutation on the table "nft_meta_attribute"
+"""
+type nft_meta_attribute_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [nft_meta_attribute!]!
+}
+
+"""
+on_conflict condition type for table "nft_meta_attribute"
+"""
+input nft_meta_attribute_on_conflict {
+  constraint: nft_meta_attribute_constraint!
+  update_columns: [nft_meta_attribute_update_column!]! = []
+  where: nft_meta_attribute_bool_exp
+}
+
+"""Ordering options when selecting data from "nft_meta_attribute"."""
+input nft_meta_attribute_order_by {
+  created_at: order_by
+  id: order_by
+  meta_id: order_by
+  nft_meta: nft_meta_order_by
+  rarity: order_by
+  score: order_by
+  trait_type: order_by
+  updated_at: order_by
+  value: order_by
+}
+
+"""primary key columns input for table: nft_meta_attribute"""
+input nft_meta_attribute_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "nft_meta_attribute"
+"""
+enum nft_meta_attribute_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  meta_id
+
+  """column name"""
+  rarity
+
+  """column name"""
+  score
+
+  """column name"""
+  trait_type
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  value
+}
+
+"""
+input type for updating data in table "nft_meta_attribute"
+"""
+input nft_meta_attribute_set_input {
+  created_at: timestamp
+  id: uuid
+  meta_id: uuid
+  rarity: float8
+  score: float8
+  trait_type: String
+  updated_at: timestamp
+  value: String
+}
+
+"""aggregate stddev on columns"""
+type nft_meta_attribute_stddev_fields {
+  rarity: Float
+  score: Float
+}
+
+"""
+order by stddev() on columns of table "nft_meta_attribute"
+"""
+input nft_meta_attribute_stddev_order_by {
+  rarity: order_by
+  score: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type nft_meta_attribute_stddev_pop_fields {
+  rarity: Float
+  score: Float
+}
+
+"""
+order by stddev_pop() on columns of table "nft_meta_attribute"
+"""
+input nft_meta_attribute_stddev_pop_order_by {
+  rarity: order_by
+  score: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type nft_meta_attribute_stddev_samp_fields {
+  rarity: Float
+  score: Float
+}
+
+"""
+order by stddev_samp() on columns of table "nft_meta_attribute"
+"""
+input nft_meta_attribute_stddev_samp_order_by {
+  rarity: order_by
+  score: order_by
+}
+
+"""aggregate sum on columns"""
+type nft_meta_attribute_sum_fields {
+  rarity: float8
+  score: float8
+}
+
+"""
+order by sum() on columns of table "nft_meta_attribute"
+"""
+input nft_meta_attribute_sum_order_by {
+  rarity: order_by
+  score: order_by
+}
+
+"""
+update columns of table "nft_meta_attribute"
+"""
+enum nft_meta_attribute_update_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  meta_id
+
+  """column name"""
+  rarity
+
+  """column name"""
+  score
+
+  """column name"""
+  trait_type
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  value
+}
+
+input nft_meta_attribute_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: nft_meta_attribute_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: nft_meta_attribute_set_input
+  where: nft_meta_attribute_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type nft_meta_attribute_var_pop_fields {
+  rarity: Float
+  score: Float
+}
+
+"""
+order by var_pop() on columns of table "nft_meta_attribute"
+"""
+input nft_meta_attribute_var_pop_order_by {
+  rarity: order_by
+  score: order_by
+}
+
+"""aggregate var_samp on columns"""
+type nft_meta_attribute_var_samp_fields {
+  rarity: Float
+  score: Float
+}
+
+"""
+order by var_samp() on columns of table "nft_meta_attribute"
+"""
+input nft_meta_attribute_var_samp_order_by {
+  rarity: order_by
+  score: order_by
+}
+
+"""aggregate variance on columns"""
+type nft_meta_attribute_variance_fields {
+  rarity: Float
+  score: Float
+}
+
+"""
+order by variance() on columns of table "nft_meta_attribute"
+"""
+input nft_meta_attribute_variance_order_by {
+  rarity: order_by
+  score: order_by
+}
+
+"""aggregate avg on columns"""
+type nft_meta_avg_fields {
+  ranking: Float
+  rarity: Float
+  token_id_numeric: Float
+}
+
+"""
+order by avg() on columns of table "nft_meta"
+"""
+input nft_meta_avg_order_by {
+  ranking: order_by
+  rarity: order_by
+  token_id_numeric: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "nft_meta". All fields are combined with a logical 'AND'.
+"""
+input nft_meta_bool_exp {
+  _and: [nft_meta_bool_exp!]
+  _not: nft_meta_bool_exp
+  _or: [nft_meta_bool_exp!]
+  asset_name: String_comparison_exp
+  chain_id: uuid_comparison_exp
+  chain_locked: Boolean_comparison_exp
+  collection: collection_bool_exp
+  collection_id: uuid_comparison_exp
+  created_at: timestamp_comparison_exp
+  grouping: String_comparison_exp
+  id: uuid_comparison_exp
+  image: String_comparison_exp
+  json_meta: jsonb_comparison_exp
+  name: String_comparison_exp
+  nft_meta_attributes: nft_meta_attribute_bool_exp
+  nft_state: nft_state_bool_exp
+  ranking: Int_comparison_exp
+  rarity: float8_comparison_exp
+  smart_contract_id: uuid_comparison_exp
+  token_id: String_comparison_exp
+  token_id_numeric: numeric_comparison_exp
+  updated_at: timestamp_comparison_exp
+  uuid: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "nft_meta"
+"""
+enum nft_meta_constraint {
+  """
+  unique or primary key constraint on columns "collection_id", "token_id"
+  """
+  nft_meta_collection_id_token_id_key
+
+  """
+  unique or primary key constraint on columns "id"
+  """
+  nft_meta_pkey
+}
+
+"""
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input nft_meta_delete_at_path_input {
+  json_meta: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+"""
+input nft_meta_delete_elem_input {
+  json_meta: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input nft_meta_delete_key_input {
+  json_meta: String
+}
+
+"""
+input type for incrementing numeric columns in table "nft_meta"
+"""
+input nft_meta_inc_input {
+  ranking: Int
+  rarity: float8
+}
+
+"""
+input type for inserting data into table "nft_meta"
+"""
+input nft_meta_insert_input {
+  asset_name: String
+  chain_id: uuid
+  chain_locked: Boolean
+  collection: collection_obj_rel_insert_input
+  collection_id: uuid
+  created_at: timestamp
+  grouping: String
+  id: uuid
+  image: String
+  json_meta: jsonb
+  name: String
+  nft_meta_attributes: nft_meta_attribute_arr_rel_insert_input
+  nft_state: nft_state_arr_rel_insert_input
+  ranking: Int
+  rarity: float8
+  smart_contract_id: uuid
+  token_id: String
+  updated_at: timestamp
+  uuid: String
+}
+
+"""aggregate max on columns"""
+type nft_meta_max_fields {
+  asset_name: String
+  chain_id: uuid
+  collection_id: uuid
+  created_at: timestamp
+  grouping: String
+  id: uuid
+  image: String
+  name: String
+  ranking: Int
+  rarity: float8
+  smart_contract_id: uuid
+  token_id: String
+  token_id_numeric: numeric
+  updated_at: timestamp
+  uuid: String
+}
+
+"""
+order by max() on columns of table "nft_meta"
+"""
+input nft_meta_max_order_by {
+  asset_name: order_by
+  chain_id: order_by
+  collection_id: order_by
+  created_at: order_by
+  grouping: order_by
+  id: order_by
+  image: order_by
+  name: order_by
+  ranking: order_by
+  rarity: order_by
+  smart_contract_id: order_by
+  token_id: order_by
+  token_id_numeric: order_by
+  updated_at: order_by
+  uuid: order_by
+}
+
+"""aggregate min on columns"""
+type nft_meta_min_fields {
+  asset_name: String
+  chain_id: uuid
+  collection_id: uuid
+  created_at: timestamp
+  grouping: String
+  id: uuid
+  image: String
+  name: String
+  ranking: Int
+  rarity: float8
+  smart_contract_id: uuid
+  token_id: String
+  token_id_numeric: numeric
+  updated_at: timestamp
+  uuid: String
+}
+
+"""
+order by min() on columns of table "nft_meta"
+"""
+input nft_meta_min_order_by {
+  asset_name: order_by
+  chain_id: order_by
+  collection_id: order_by
+  created_at: order_by
+  grouping: order_by
+  id: order_by
+  image: order_by
+  name: order_by
+  ranking: order_by
+  rarity: order_by
+  smart_contract_id: order_by
+  token_id: order_by
+  token_id_numeric: order_by
+  updated_at: order_by
+  uuid: order_by
+}
+
+"""
+response of any mutation on the table "nft_meta"
+"""
+type nft_meta_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [nft_meta!]!
+}
+
+"""
+input type for inserting object relation for remote table "nft_meta"
+"""
+input nft_meta_obj_rel_insert_input {
+  data: nft_meta_insert_input!
+
+  """upsert condition"""
+  on_conflict: nft_meta_on_conflict
+}
+
+"""
+on_conflict condition type for table "nft_meta"
+"""
+input nft_meta_on_conflict {
+  constraint: nft_meta_constraint!
+  update_columns: [nft_meta_update_column!]! = []
+  where: nft_meta_bool_exp
+}
+
+"""Ordering options when selecting data from "nft_meta"."""
+input nft_meta_order_by {
+  asset_name: order_by
+  chain_id: order_by
+  chain_locked: order_by
+  collection: collection_order_by
+  collection_id: order_by
+  created_at: order_by
+  grouping: order_by
+  id: order_by
+  image: order_by
+  json_meta: order_by
+  name: order_by
+  nft_meta_attributes_aggregate: nft_meta_attribute_aggregate_order_by
+  nft_state_aggregate: nft_state_aggregate_order_by
+  ranking: order_by
+  rarity: order_by
+  smart_contract_id: order_by
+  token_id: order_by
+  token_id_numeric: order_by
+  updated_at: order_by
+  uuid: order_by
+}
+
+"""primary key columns input for table: nft_meta"""
+input nft_meta_pk_columns_input {
+  id: uuid!
+}
+
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input nft_meta_prepend_input {
+  json_meta: jsonb
+}
+
+"""
+select columns of table "nft_meta"
+"""
+enum nft_meta_select_column {
+  """column name"""
+  asset_name
+
+  """column name"""
+  chain_id
+
+  """column name"""
+  chain_locked
+
+  """column name"""
+  collection_id
+
+  """column name"""
+  created_at
+
+  """column name"""
+  grouping
+
+  """column name"""
+  id
+
+  """column name"""
+  image
+
+  """column name"""
+  json_meta
+
+  """column name"""
+  name
+
+  """column name"""
+  ranking
+
+  """column name"""
+  rarity
+
+  """column name"""
+  smart_contract_id
+
+  """column name"""
+  token_id
+
+  """column name"""
+  token_id_numeric
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  uuid
+}
+
+"""
+input type for updating data in table "nft_meta"
+"""
+input nft_meta_set_input {
+  asset_name: String
+  chain_id: uuid
+  chain_locked: Boolean
+  collection_id: uuid
+  created_at: timestamp
+  grouping: String
+  id: uuid
+  image: String
+  json_meta: jsonb
+  name: String
+  ranking: Int
+  rarity: float8
+  smart_contract_id: uuid
+  token_id: String
+  updated_at: timestamp
+  uuid: String
+}
+
+"""aggregate stddev on columns"""
+type nft_meta_stddev_fields {
+  ranking: Float
+  rarity: Float
+  token_id_numeric: Float
+}
+
+"""
+order by stddev() on columns of table "nft_meta"
+"""
+input nft_meta_stddev_order_by {
+  ranking: order_by
+  rarity: order_by
+  token_id_numeric: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type nft_meta_stddev_pop_fields {
+  ranking: Float
+  rarity: Float
+  token_id_numeric: Float
+}
+
+"""
+order by stddev_pop() on columns of table "nft_meta"
+"""
+input nft_meta_stddev_pop_order_by {
+  ranking: order_by
+  rarity: order_by
+  token_id_numeric: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type nft_meta_stddev_samp_fields {
+  ranking: Float
+  rarity: Float
+  token_id_numeric: Float
+}
+
+"""
+order by stddev_samp() on columns of table "nft_meta"
+"""
+input nft_meta_stddev_samp_order_by {
+  ranking: order_by
+  rarity: order_by
+  token_id_numeric: order_by
+}
+
+"""aggregate sum on columns"""
+type nft_meta_sum_fields {
+  ranking: Int
+  rarity: float8
+  token_id_numeric: numeric
+}
+
+"""
+order by sum() on columns of table "nft_meta"
+"""
+input nft_meta_sum_order_by {
+  ranking: order_by
+  rarity: order_by
+  token_id_numeric: order_by
+}
+
+"""
+update columns of table "nft_meta"
+"""
+enum nft_meta_update_column {
+  """column name"""
+  asset_name
+
+  """column name"""
+  chain_id
+
+  """column name"""
+  chain_locked
+
+  """column name"""
+  collection_id
+
+  """column name"""
+  created_at
+
+  """column name"""
+  grouping
+
+  """column name"""
+  id
+
+  """column name"""
+  image
+
+  """column name"""
+  json_meta
+
+  """column name"""
+  name
+
+  """column name"""
+  ranking
+
+  """column name"""
+  rarity
+
+  """column name"""
+  smart_contract_id
+
+  """column name"""
+  token_id
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  uuid
+}
+
+input nft_meta_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: nft_meta_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: nft_meta_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+  """
+  _delete_elem: nft_meta_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: nft_meta_delete_key_input
+
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: nft_meta_inc_input
+
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: nft_meta_prepend_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: nft_meta_set_input
+  where: nft_meta_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type nft_meta_var_pop_fields {
+  ranking: Float
+  rarity: Float
+  token_id_numeric: Float
+}
+
+"""
+order by var_pop() on columns of table "nft_meta"
+"""
+input nft_meta_var_pop_order_by {
+  ranking: order_by
+  rarity: order_by
+  token_id_numeric: order_by
+}
+
+"""aggregate var_samp on columns"""
+type nft_meta_var_samp_fields {
+  ranking: Float
+  rarity: Float
+  token_id_numeric: Float
+}
+
+"""
+order by var_samp() on columns of table "nft_meta"
+"""
+input nft_meta_var_samp_order_by {
+  ranking: order_by
+  rarity: order_by
+  token_id_numeric: order_by
+}
+
+"""aggregate variance on columns"""
+type nft_meta_variance_fields {
+  ranking: Float
+  rarity: Float
+  token_id_numeric: Float
+}
+
+"""
+order by variance() on columns of table "nft_meta"
+"""
+input nft_meta_variance_order_by {
+  ranking: order_by
+  rarity: order_by
+  token_id_numeric: order_by
+}
+
+"""
+columns and relationships of "nft_state"
+"""
+type nft_state {
+  bid: Boolean!
+  bid_block_height: bigint
+  bid_buyer: String
+  bid_contract_id: uuid
+  bid_price: numeric
+  bid_price_str: String
+  bid_tx_index: bigint
+  burned: Boolean!
+  commission_id: uuid
+  function_args(
+    """JSON select path"""
+    path: String
+  ): jsonb
+  id: uuid!
+  list_block_datetime: timestamp
+  list_block_height: bigint
+  list_contract_id: uuid
+  list_price: numeric
+  list_price_str: String
+  list_seller: String
+  list_tx_index: bigint
+  listed: Boolean!
+  meta_id: uuid!
+  mint_tx: String
+  minted: Boolean!
+  staked: Boolean!
+  staked_block_height: bigint
+  staked_contract_id: uuid
+  staked_owner: String
+  staked_tx_index: bigint
+  updated_at: timestamp!
+}
+
+"""
+aggregated selection of "nft_state"
+"""
+type nft_state_aggregate {
+  aggregate: nft_state_aggregate_fields
+  nodes: [nft_state!]!
+}
+
+"""
+aggregate fields of "nft_state"
+"""
+type nft_state_aggregate_fields {
+  avg: nft_state_avg_fields
+  count(columns: [nft_state_select_column!], distinct: Boolean): Int!
+  max: nft_state_max_fields
+  min: nft_state_min_fields
+  stddev: nft_state_stddev_fields
+  stddev_pop: nft_state_stddev_pop_fields
+  stddev_samp: nft_state_stddev_samp_fields
+  sum: nft_state_sum_fields
+  var_pop: nft_state_var_pop_fields
+  var_samp: nft_state_var_samp_fields
+  variance: nft_state_variance_fields
+}
+
+"""
+order by aggregate values of table "nft_state"
+"""
+input nft_state_aggregate_order_by {
+  avg: nft_state_avg_order_by
+  count: order_by
+  max: nft_state_max_order_by
+  min: nft_state_min_order_by
+  stddev: nft_state_stddev_order_by
+  stddev_pop: nft_state_stddev_pop_order_by
+  stddev_samp: nft_state_stddev_samp_order_by
+  sum: nft_state_sum_order_by
+  var_pop: nft_state_var_pop_order_by
+  var_samp: nft_state_var_samp_order_by
+  variance: nft_state_variance_order_by
+}
+
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input nft_state_append_input {
+  function_args: jsonb
+}
+
+"""
+input type for inserting array relation for remote table "nft_state"
+"""
+input nft_state_arr_rel_insert_input {
+  data: [nft_state_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: nft_state_on_conflict
+}
+
+"""aggregate avg on columns"""
+type nft_state_avg_fields {
+  bid_block_height: Float
+  bid_price: Float
+  bid_tx_index: Float
+  list_block_height: Float
+  list_price: Float
+  list_tx_index: Float
+  staked_block_height: Float
+  staked_tx_index: Float
+}
+
+"""
+order by avg() on columns of table "nft_state"
+"""
+input nft_state_avg_order_by {
+  bid_block_height: order_by
+  bid_price: order_by
+  bid_tx_index: order_by
+  list_block_height: order_by
+  list_price: order_by
+  list_tx_index: order_by
+  staked_block_height: order_by
+  staked_tx_index: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "nft_state". All fields are combined with a logical 'AND'.
+"""
+input nft_state_bool_exp {
+  _and: [nft_state_bool_exp!]
+  _not: nft_state_bool_exp
+  _or: [nft_state_bool_exp!]
+  bid: Boolean_comparison_exp
+  bid_block_height: bigint_comparison_exp
+  bid_buyer: String_comparison_exp
+  bid_contract_id: uuid_comparison_exp
+  bid_price: numeric_comparison_exp
+  bid_price_str: String_comparison_exp
+  bid_tx_index: bigint_comparison_exp
+  burned: Boolean_comparison_exp
+  commission_id: uuid_comparison_exp
+  function_args: jsonb_comparison_exp
+  id: uuid_comparison_exp
+  list_block_datetime: timestamp_comparison_exp
+  list_block_height: bigint_comparison_exp
+  list_contract_id: uuid_comparison_exp
+  list_price: numeric_comparison_exp
+  list_price_str: String_comparison_exp
+  list_seller: String_comparison_exp
+  list_tx_index: bigint_comparison_exp
+  listed: Boolean_comparison_exp
+  meta_id: uuid_comparison_exp
+  mint_tx: String_comparison_exp
+  minted: Boolean_comparison_exp
+  staked: Boolean_comparison_exp
+  staked_block_height: bigint_comparison_exp
+  staked_contract_id: uuid_comparison_exp
+  staked_owner: String_comparison_exp
+  staked_tx_index: bigint_comparison_exp
+  updated_at: timestamp_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "nft_state"
+"""
+enum nft_state_constraint {
+  """
+  unique or primary key constraint on columns "meta_id"
+  """
+  nft_state_meta_id_key
+
+  """
+  unique or primary key constraint on columns "id"
+  """
+  nft_state_pkey
+}
+
+"""
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input nft_state_delete_at_path_input {
+  function_args: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+"""
+input nft_state_delete_elem_input {
+  function_args: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input nft_state_delete_key_input {
+  function_args: String
+}
+
+"""
+input type for incrementing numeric columns in table "nft_state"
+"""
+input nft_state_inc_input {
+  bid_block_height: bigint
+  bid_price: numeric
+  bid_tx_index: bigint
+  list_block_height: bigint
+  list_price: numeric
+  list_tx_index: bigint
+  staked_block_height: bigint
+  staked_tx_index: bigint
+}
+
+"""
+input type for inserting data into table "nft_state"
+"""
+input nft_state_insert_input {
+  bid: Boolean
+  bid_block_height: bigint
+  bid_buyer: String
+  bid_contract_id: uuid
+  bid_price: numeric
+  bid_tx_index: bigint
+  burned: Boolean
+  commission_id: uuid
+  function_args: jsonb
+  id: uuid
+  list_block_datetime: timestamp
+  list_block_height: bigint
+  list_contract_id: uuid
+  list_price: numeric
+  list_seller: String
+  list_tx_index: bigint
+  listed: Boolean
+  meta_id: uuid
+  mint_tx: String
+  minted: Boolean
+  staked: Boolean
+  staked_block_height: bigint
+  staked_contract_id: uuid
+  staked_owner: String
+  staked_tx_index: bigint
+  updated_at: timestamp
+}
+
+"""aggregate max on columns"""
+type nft_state_max_fields {
+  bid_block_height: bigint
+  bid_buyer: String
+  bid_contract_id: uuid
+  bid_price: numeric
+  bid_price_str: String
+  bid_tx_index: bigint
+  commission_id: uuid
+  id: uuid
+  list_block_datetime: timestamp
+  list_block_height: bigint
+  list_contract_id: uuid
+  list_price: numeric
+  list_price_str: String
+  list_seller: String
+  list_tx_index: bigint
+  meta_id: uuid
+  mint_tx: String
+  staked_block_height: bigint
+  staked_contract_id: uuid
+  staked_owner: String
+  staked_tx_index: bigint
+  updated_at: timestamp
+}
+
+"""
+order by max() on columns of table "nft_state"
+"""
+input nft_state_max_order_by {
+  bid_block_height: order_by
+  bid_buyer: order_by
+  bid_contract_id: order_by
+  bid_price: order_by
+  bid_price_str: order_by
+  bid_tx_index: order_by
+  commission_id: order_by
+  id: order_by
+  list_block_datetime: order_by
+  list_block_height: order_by
+  list_contract_id: order_by
+  list_price: order_by
+  list_price_str: order_by
+  list_seller: order_by
+  list_tx_index: order_by
+  meta_id: order_by
+  mint_tx: order_by
+  staked_block_height: order_by
+  staked_contract_id: order_by
+  staked_owner: order_by
+  staked_tx_index: order_by
+  updated_at: order_by
+}
+
+"""aggregate min on columns"""
+type nft_state_min_fields {
+  bid_block_height: bigint
+  bid_buyer: String
+  bid_contract_id: uuid
+  bid_price: numeric
+  bid_price_str: String
+  bid_tx_index: bigint
+  commission_id: uuid
+  id: uuid
+  list_block_datetime: timestamp
+  list_block_height: bigint
+  list_contract_id: uuid
+  list_price: numeric
+  list_price_str: String
+  list_seller: String
+  list_tx_index: bigint
+  meta_id: uuid
+  mint_tx: String
+  staked_block_height: bigint
+  staked_contract_id: uuid
+  staked_owner: String
+  staked_tx_index: bigint
+  updated_at: timestamp
+}
+
+"""
+order by min() on columns of table "nft_state"
+"""
+input nft_state_min_order_by {
+  bid_block_height: order_by
+  bid_buyer: order_by
+  bid_contract_id: order_by
+  bid_price: order_by
+  bid_price_str: order_by
+  bid_tx_index: order_by
+  commission_id: order_by
+  id: order_by
+  list_block_datetime: order_by
+  list_block_height: order_by
+  list_contract_id: order_by
+  list_price: order_by
+  list_price_str: order_by
+  list_seller: order_by
+  list_tx_index: order_by
+  meta_id: order_by
+  mint_tx: order_by
+  staked_block_height: order_by
+  staked_contract_id: order_by
+  staked_owner: order_by
+  staked_tx_index: order_by
+  updated_at: order_by
+}
+
+"""
+response of any mutation on the table "nft_state"
+"""
+type nft_state_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [nft_state!]!
+}
+
+"""
+on_conflict condition type for table "nft_state"
+"""
+input nft_state_on_conflict {
+  constraint: nft_state_constraint!
+  update_columns: [nft_state_update_column!]! = []
+  where: nft_state_bool_exp
+}
+
+"""Ordering options when selecting data from "nft_state"."""
+input nft_state_order_by {
+  bid: order_by
+  bid_block_height: order_by
+  bid_buyer: order_by
+  bid_contract_id: order_by
+  bid_price: order_by
+  bid_price_str: order_by
+  bid_tx_index: order_by
+  burned: order_by
+  commission_id: order_by
+  function_args: order_by
+  id: order_by
+  list_block_datetime: order_by
+  list_block_height: order_by
+  list_contract_id: order_by
+  list_price: order_by
+  list_price_str: order_by
+  list_seller: order_by
+  list_tx_index: order_by
+  listed: order_by
+  meta_id: order_by
+  mint_tx: order_by
+  minted: order_by
+  staked: order_by
+  staked_block_height: order_by
+  staked_contract_id: order_by
+  staked_owner: order_by
+  staked_tx_index: order_by
+  updated_at: order_by
+}
+
+"""primary key columns input for table: nft_state"""
+input nft_state_pk_columns_input {
+  id: uuid!
+}
+
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input nft_state_prepend_input {
+  function_args: jsonb
+}
+
+"""
+select columns of table "nft_state"
+"""
+enum nft_state_select_column {
+  """column name"""
+  bid
+
+  """column name"""
+  bid_block_height
+
+  """column name"""
+  bid_buyer
+
+  """column name"""
+  bid_contract_id
+
+  """column name"""
+  bid_price
+
+  """column name"""
+  bid_price_str
+
+  """column name"""
+  bid_tx_index
+
+  """column name"""
+  burned
+
+  """column name"""
+  commission_id
+
+  """column name"""
+  function_args
+
+  """column name"""
+  id
+
+  """column name"""
+  list_block_datetime
+
+  """column name"""
+  list_block_height
+
+  """column name"""
+  list_contract_id
+
+  """column name"""
+  list_price
+
+  """column name"""
+  list_price_str
+
+  """column name"""
+  list_seller
+
+  """column name"""
+  list_tx_index
+
+  """column name"""
+  listed
+
+  """column name"""
+  meta_id
+
+  """column name"""
+  mint_tx
+
+  """column name"""
+  minted
+
+  """column name"""
+  staked
+
+  """column name"""
+  staked_block_height
+
+  """column name"""
+  staked_contract_id
+
+  """column name"""
+  staked_owner
+
+  """column name"""
+  staked_tx_index
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "nft_state"
+"""
+input nft_state_set_input {
+  bid: Boolean
+  bid_block_height: bigint
+  bid_buyer: String
+  bid_contract_id: uuid
+  bid_price: numeric
+  bid_tx_index: bigint
+  burned: Boolean
+  commission_id: uuid
+  function_args: jsonb
+  id: uuid
+  list_block_datetime: timestamp
+  list_block_height: bigint
+  list_contract_id: uuid
+  list_price: numeric
+  list_seller: String
+  list_tx_index: bigint
+  listed: Boolean
+  meta_id: uuid
+  mint_tx: String
+  minted: Boolean
+  staked: Boolean
+  staked_block_height: bigint
+  staked_contract_id: uuid
+  staked_owner: String
+  staked_tx_index: bigint
+  updated_at: timestamp
+}
+
+"""aggregate stddev on columns"""
+type nft_state_stddev_fields {
+  bid_block_height: Float
+  bid_price: Float
+  bid_tx_index: Float
+  list_block_height: Float
+  list_price: Float
+  list_tx_index: Float
+  staked_block_height: Float
+  staked_tx_index: Float
+}
+
+"""
+order by stddev() on columns of table "nft_state"
+"""
+input nft_state_stddev_order_by {
+  bid_block_height: order_by
+  bid_price: order_by
+  bid_tx_index: order_by
+  list_block_height: order_by
+  list_price: order_by
+  list_tx_index: order_by
+  staked_block_height: order_by
+  staked_tx_index: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type nft_state_stddev_pop_fields {
+  bid_block_height: Float
+  bid_price: Float
+  bid_tx_index: Float
+  list_block_height: Float
+  list_price: Float
+  list_tx_index: Float
+  staked_block_height: Float
+  staked_tx_index: Float
+}
+
+"""
+order by stddev_pop() on columns of table "nft_state"
+"""
+input nft_state_stddev_pop_order_by {
+  bid_block_height: order_by
+  bid_price: order_by
+  bid_tx_index: order_by
+  list_block_height: order_by
+  list_price: order_by
+  list_tx_index: order_by
+  staked_block_height: order_by
+  staked_tx_index: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type nft_state_stddev_samp_fields {
+  bid_block_height: Float
+  bid_price: Float
+  bid_tx_index: Float
+  list_block_height: Float
+  list_price: Float
+  list_tx_index: Float
+  staked_block_height: Float
+  staked_tx_index: Float
+}
+
+"""
+order by stddev_samp() on columns of table "nft_state"
+"""
+input nft_state_stddev_samp_order_by {
+  bid_block_height: order_by
+  bid_price: order_by
+  bid_tx_index: order_by
+  list_block_height: order_by
+  list_price: order_by
+  list_tx_index: order_by
+  staked_block_height: order_by
+  staked_tx_index: order_by
+}
+
+"""aggregate sum on columns"""
+type nft_state_sum_fields {
+  bid_block_height: bigint
+  bid_price: numeric
+  bid_tx_index: bigint
+  list_block_height: bigint
+  list_price: numeric
+  list_tx_index: bigint
+  staked_block_height: bigint
+  staked_tx_index: bigint
+}
+
+"""
+order by sum() on columns of table "nft_state"
+"""
+input nft_state_sum_order_by {
+  bid_block_height: order_by
+  bid_price: order_by
+  bid_tx_index: order_by
+  list_block_height: order_by
+  list_price: order_by
+  list_tx_index: order_by
+  staked_block_height: order_by
+  staked_tx_index: order_by
+}
+
+"""
+update columns of table "nft_state"
+"""
+enum nft_state_update_column {
+  """column name"""
+  bid
+
+  """column name"""
+  bid_block_height
+
+  """column name"""
+  bid_buyer
+
+  """column name"""
+  bid_contract_id
+
+  """column name"""
+  bid_price
+
+  """column name"""
+  bid_tx_index
+
+  """column name"""
+  burned
+
+  """column name"""
+  commission_id
+
+  """column name"""
+  function_args
+
+  """column name"""
+  id
+
+  """column name"""
+  list_block_datetime
+
+  """column name"""
+  list_block_height
+
+  """column name"""
+  list_contract_id
+
+  """column name"""
+  list_price
+
+  """column name"""
+  list_seller
+
+  """column name"""
+  list_tx_index
+
+  """column name"""
+  listed
+
+  """column name"""
+  meta_id
+
+  """column name"""
+  mint_tx
+
+  """column name"""
+  minted
+
+  """column name"""
+  staked
+
+  """column name"""
+  staked_block_height
+
+  """column name"""
+  staked_contract_id
+
+  """column name"""
+  staked_owner
+
+  """column name"""
+  staked_tx_index
+
+  """column name"""
+  updated_at
+}
+
+input nft_state_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: nft_state_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: nft_state_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+  """
+  _delete_elem: nft_state_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: nft_state_delete_key_input
+
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: nft_state_inc_input
+
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: nft_state_prepend_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: nft_state_set_input
+  where: nft_state_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type nft_state_var_pop_fields {
+  bid_block_height: Float
+  bid_price: Float
+  bid_tx_index: Float
+  list_block_height: Float
+  list_price: Float
+  list_tx_index: Float
+  staked_block_height: Float
+  staked_tx_index: Float
+}
+
+"""
+order by var_pop() on columns of table "nft_state"
+"""
+input nft_state_var_pop_order_by {
+  bid_block_height: order_by
+  bid_price: order_by
+  bid_tx_index: order_by
+  list_block_height: order_by
+  list_price: order_by
+  list_tx_index: order_by
+  staked_block_height: order_by
+  staked_tx_index: order_by
+}
+
+"""aggregate var_samp on columns"""
+type nft_state_var_samp_fields {
+  bid_block_height: Float
+  bid_price: Float
+  bid_tx_index: Float
+  list_block_height: Float
+  list_price: Float
+  list_tx_index: Float
+  staked_block_height: Float
+  staked_tx_index: Float
+}
+
+"""
+order by var_samp() on columns of table "nft_state"
+"""
+input nft_state_var_samp_order_by {
+  bid_block_height: order_by
+  bid_price: order_by
+  bid_tx_index: order_by
+  list_block_height: order_by
+  list_price: order_by
+  list_tx_index: order_by
+  staked_block_height: order_by
+  staked_tx_index: order_by
+}
+
+"""aggregate variance on columns"""
+type nft_state_variance_fields {
+  bid_block_height: Float
+  bid_price: Float
+  bid_tx_index: Float
+  list_block_height: Float
+  list_price: Float
+  list_tx_index: Float
+  staked_block_height: Float
+  staked_tx_index: Float
+}
+
+"""
+order by variance() on columns of table "nft_state"
+"""
+input nft_state_variance_order_by {
+  bid_block_height: order_by
+  bid_price: order_by
+  bid_tx_index: order_by
+  list_block_height: order_by
+  list_price: order_by
+  list_tx_index: order_by
+  staked_block_height: order_by
+  staked_tx_index: order_by
+}
+
+scalar numeric
+
+"""
+Boolean expression to compare columns of type "numeric". All fields are combined with logical 'AND'.
+"""
+input numeric_comparison_exp {
+  _eq: numeric
+  _gt: numeric
+  _gte: numeric
+  _in: [numeric!]
+  _is_null: Boolean
+  _lt: numeric
+  _lte: numeric
+  _neq: numeric
+  _nin: [numeric!]
+}
+
+"""column ordering options"""
+enum order_by {
+  """in ascending order, nulls last"""
+  asc
+
+  """in ascending order, nulls first"""
+  asc_nulls_first
+
+  """in ascending order, nulls last"""
+  asc_nulls_last
+
+  """in descending order, nulls first"""
+  desc
+
+  """in descending order, nulls first"""
+  desc_nulls_first
+
+  """in descending order, nulls last"""
+  desc_nulls_last
+}
+
+type query_root {
+  """
+  fetch data from the table: "action"
+  """
+  action(
+    """distinct select on columns"""
+    distinct_on: [action_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [action_order_by!]
+
+    """filter the rows returned"""
+    where: action_bool_exp
+  ): [action!]!
+
+  """
+  fetch aggregated fields from the table: "action"
+  """
+  action_aggregate(
+    """distinct select on columns"""
+    distinct_on: [action_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [action_order_by!]
+
+    """filter the rows returned"""
+    where: action_bool_exp
+  ): action_aggregate!
+
+  """fetch data from the table: "action" using primary key columns"""
+  action_by_pk(id: uuid!): action
+
+  """
+  fetch data from the table: "collection"
+  """
+  collection(
+    """distinct select on columns"""
+    distinct_on: [collection_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [collection_order_by!]
+
+    """filter the rows returned"""
+    where: collection_bool_exp
+  ): [collection!]!
+
+  """
+  fetch aggregated fields from the table: "collection"
+  """
+  collection_aggregate(
+    """distinct select on columns"""
+    distinct_on: [collection_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [collection_order_by!]
+
+    """filter the rows returned"""
+    where: collection_bool_exp
+  ): collection_aggregate!
+
+  """
+  fetch data from the table: "collection_attribute"
+  """
+  collection_attribute(
+    """distinct select on columns"""
+    distinct_on: [collection_attribute_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [collection_attribute_order_by!]
+
+    """filter the rows returned"""
+    where: collection_attribute_bool_exp
+  ): [collection_attribute!]!
+
+  """
+  fetch aggregated fields from the table: "collection_attribute"
+  """
+  collection_attribute_aggregate(
+    """distinct select on columns"""
+    distinct_on: [collection_attribute_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [collection_attribute_order_by!]
+
+    """filter the rows returned"""
+    where: collection_attribute_bool_exp
+  ): collection_attribute_aggregate!
+
+  """
+  fetch data from the table: "collection_attribute" using primary key columns
+  """
+  collection_attribute_by_pk(id: uuid!): collection_attribute
+
+  """fetch data from the table: "collection" using primary key columns"""
+  collection_by_pk(id: uuid!): collection
+
+  """An array relationship"""
+  nft_meta(
+    """distinct select on columns"""
+    distinct_on: [nft_meta_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [nft_meta_order_by!]
+
+    """filter the rows returned"""
+    where: nft_meta_bool_exp
+  ): [nft_meta!]!
+
+  """An aggregate relationship"""
+  nft_meta_aggregate(
+    """distinct select on columns"""
+    distinct_on: [nft_meta_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [nft_meta_order_by!]
+
+    """filter the rows returned"""
+    where: nft_meta_bool_exp
+  ): nft_meta_aggregate!
+
+  """
+  fetch data from the table: "nft_meta_attribute"
+  """
+  nft_meta_attribute(
+    """distinct select on columns"""
+    distinct_on: [nft_meta_attribute_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [nft_meta_attribute_order_by!]
+
+    """filter the rows returned"""
+    where: nft_meta_attribute_bool_exp
+  ): [nft_meta_attribute!]!
+
+  """
+  fetch aggregated fields from the table: "nft_meta_attribute"
+  """
+  nft_meta_attribute_aggregate(
+    """distinct select on columns"""
+    distinct_on: [nft_meta_attribute_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [nft_meta_attribute_order_by!]
+
+    """filter the rows returned"""
+    where: nft_meta_attribute_bool_exp
+  ): nft_meta_attribute_aggregate!
+
+  """
+  fetch data from the table: "nft_meta_attribute" using primary key columns
+  """
+  nft_meta_attribute_by_pk(id: uuid!): nft_meta_attribute
+
+  """fetch data from the table: "nft_meta" using primary key columns"""
+  nft_meta_by_pk(id: uuid!): nft_meta
+
+  """An array relationship"""
+  nft_state(
+    """distinct select on columns"""
+    distinct_on: [nft_state_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [nft_state_order_by!]
+
+    """filter the rows returned"""
+    where: nft_state_bool_exp
+  ): [nft_state!]!
+
+  """An aggregate relationship"""
+  nft_state_aggregate(
+    """distinct select on columns"""
+    distinct_on: [nft_state_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [nft_state_order_by!]
+
+    """filter the rows returned"""
+    where: nft_state_bool_exp
+  ): nft_state_aggregate!
+
+  """fetch data from the table: "nft_state" using primary key columns"""
+  nft_state_by_pk(id: uuid!): nft_state
+
+  """
+  fetch data from the table: "smart_contract"
+  """
+  smart_contract(
+    """distinct select on columns"""
+    distinct_on: [smart_contract_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [smart_contract_order_by!]
+
+    """filter the rows returned"""
+    where: smart_contract_bool_exp
+  ): [smart_contract!]!
+
+  """
+  fetch aggregated fields from the table: "smart_contract"
+  """
+  smart_contract_aggregate(
+    """distinct select on columns"""
+    distinct_on: [smart_contract_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [smart_contract_order_by!]
+
+    """filter the rows returned"""
+    where: smart_contract_bool_exp
+  ): smart_contract_aggregate!
+
+  """fetch data from the table: "smart_contract" using primary key columns"""
+  smart_contract_by_pk(id: uuid!): smart_contract
+}
+
+"""
+columns and relationships of "smart_contract"
+"""
+type smart_contract {
+  asset_name: String
+  base_marketplace_uri: String
+  chain_id: uuid!
+  collection_uri: String
+  contract_key: String!
+  contract_key_wrapper: String
+  created_at: timestamp!
+  default_commission_id: uuid
+  frozen: Boolean!
+  id: uuid!
+  json_meta(
+    """JSON select path"""
+    path: String
+  ): jsonb
+  name: String
+  scanned_transactions: Int!
+  spec: String
+  token_uri: String
+  type: _SmartContractType!
+  updated_at: timestamp!
+}
+
+"""
+aggregated selection of "smart_contract"
+"""
+type smart_contract_aggregate {
+  aggregate: smart_contract_aggregate_fields
+  nodes: [smart_contract!]!
+}
+
+"""
+aggregate fields of "smart_contract"
+"""
+type smart_contract_aggregate_fields {
+  avg: smart_contract_avg_fields
+  count(columns: [smart_contract_select_column!], distinct: Boolean): Int!
+  max: smart_contract_max_fields
+  min: smart_contract_min_fields
+  stddev: smart_contract_stddev_fields
+  stddev_pop: smart_contract_stddev_pop_fields
+  stddev_samp: smart_contract_stddev_samp_fields
+  sum: smart_contract_sum_fields
+  var_pop: smart_contract_var_pop_fields
+  var_samp: smart_contract_var_samp_fields
+  variance: smart_contract_variance_fields
+}
+
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input smart_contract_append_input {
+  json_meta: jsonb
+}
+
+"""aggregate avg on columns"""
+type smart_contract_avg_fields {
+  scanned_transactions: Float
+}
+
+"""
+Boolean expression to filter rows from the table "smart_contract". All fields are combined with a logical 'AND'.
+"""
+input smart_contract_bool_exp {
+  _and: [smart_contract_bool_exp!]
+  _not: smart_contract_bool_exp
+  _or: [smart_contract_bool_exp!]
+  asset_name: String_comparison_exp
+  base_marketplace_uri: String_comparison_exp
+  chain_id: uuid_comparison_exp
+  collection_uri: String_comparison_exp
+  contract_key: String_comparison_exp
+  contract_key_wrapper: String_comparison_exp
+  created_at: timestamp_comparison_exp
+  default_commission_id: uuid_comparison_exp
+  frozen: Boolean_comparison_exp
+  id: uuid_comparison_exp
+  json_meta: jsonb_comparison_exp
+  name: String_comparison_exp
+  scanned_transactions: Int_comparison_exp
+  spec: String_comparison_exp
+  token_uri: String_comparison_exp
+  type: _SmartContractType_comparison_exp
+  updated_at: timestamp_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "smart_contract"
+"""
+enum smart_contract_constraint {
+  """
+  unique or primary key constraint on columns "contract_key"
+  """
+  smart_contract_contract_key_key
+
+  """
+  unique or primary key constraint on columns "id"
+  """
+  smart_contract_pkey
+}
+
+"""
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input smart_contract_delete_at_path_input {
+  json_meta: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+"""
+input smart_contract_delete_elem_input {
+  json_meta: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input smart_contract_delete_key_input {
+  json_meta: String
+}
+
+"""
+input type for incrementing numeric columns in table "smart_contract"
+"""
+input smart_contract_inc_input {
+  scanned_transactions: Int
+}
+
+"""
+input type for inserting data into table "smart_contract"
+"""
+input smart_contract_insert_input {
+  asset_name: String
+  base_marketplace_uri: String
+  chain_id: uuid
+  collection_uri: String
+  contract_key: String
+  contract_key_wrapper: String
+  created_at: timestamp
+  default_commission_id: uuid
+  frozen: Boolean
+  id: uuid
+  json_meta: jsonb
+  name: String
+  scanned_transactions: Int
+  spec: String
+  token_uri: String
+  type: _SmartContractType
+  updated_at: timestamp
+}
+
+"""aggregate max on columns"""
+type smart_contract_max_fields {
+  asset_name: String
+  base_marketplace_uri: String
+  chain_id: uuid
+  collection_uri: String
+  contract_key: String
+  contract_key_wrapper: String
+  created_at: timestamp
+  default_commission_id: uuid
+  id: uuid
+  name: String
+  scanned_transactions: Int
+  spec: String
+  token_uri: String
+  updated_at: timestamp
+}
+
+"""aggregate min on columns"""
+type smart_contract_min_fields {
+  asset_name: String
+  base_marketplace_uri: String
+  chain_id: uuid
+  collection_uri: String
+  contract_key: String
+  contract_key_wrapper: String
+  created_at: timestamp
+  default_commission_id: uuid
+  id: uuid
+  name: String
+  scanned_transactions: Int
+  spec: String
+  token_uri: String
+  updated_at: timestamp
+}
+
+"""
+response of any mutation on the table "smart_contract"
+"""
+type smart_contract_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [smart_contract!]!
+}
+
+"""
+input type for inserting object relation for remote table "smart_contract"
+"""
+input smart_contract_obj_rel_insert_input {
+  data: smart_contract_insert_input!
+
+  """upsert condition"""
+  on_conflict: smart_contract_on_conflict
+}
+
+"""
+on_conflict condition type for table "smart_contract"
+"""
+input smart_contract_on_conflict {
+  constraint: smart_contract_constraint!
+  update_columns: [smart_contract_update_column!]! = []
+  where: smart_contract_bool_exp
+}
+
+"""Ordering options when selecting data from "smart_contract"."""
+input smart_contract_order_by {
+  asset_name: order_by
+  base_marketplace_uri: order_by
+  chain_id: order_by
+  collection_uri: order_by
+  contract_key: order_by
+  contract_key_wrapper: order_by
+  created_at: order_by
+  default_commission_id: order_by
+  frozen: order_by
+  id: order_by
+  json_meta: order_by
+  name: order_by
+  scanned_transactions: order_by
+  spec: order_by
+  token_uri: order_by
+  type: order_by
+  updated_at: order_by
+}
+
+"""primary key columns input for table: smart_contract"""
+input smart_contract_pk_columns_input {
+  id: uuid!
+}
+
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input smart_contract_prepend_input {
+  json_meta: jsonb
+}
+
+"""
+select columns of table "smart_contract"
+"""
+enum smart_contract_select_column {
+  """column name"""
+  asset_name
+
+  """column name"""
+  base_marketplace_uri
+
+  """column name"""
+  chain_id
+
+  """column name"""
+  collection_uri
+
+  """column name"""
+  contract_key
+
+  """column name"""
+  contract_key_wrapper
+
+  """column name"""
+  created_at
+
+  """column name"""
+  default_commission_id
+
+  """column name"""
+  frozen
+
+  """column name"""
+  id
+
+  """column name"""
+  json_meta
+
+  """column name"""
+  name
+
+  """column name"""
+  scanned_transactions
+
+  """column name"""
+  spec
+
+  """column name"""
+  token_uri
+
+  """column name"""
+  type
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "smart_contract"
+"""
+input smart_contract_set_input {
+  asset_name: String
+  base_marketplace_uri: String
+  chain_id: uuid
+  collection_uri: String
+  contract_key: String
+  contract_key_wrapper: String
+  created_at: timestamp
+  default_commission_id: uuid
+  frozen: Boolean
+  id: uuid
+  json_meta: jsonb
+  name: String
+  scanned_transactions: Int
+  spec: String
+  token_uri: String
+  type: _SmartContractType
+  updated_at: timestamp
+}
+
+"""aggregate stddev on columns"""
+type smart_contract_stddev_fields {
+  scanned_transactions: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type smart_contract_stddev_pop_fields {
+  scanned_transactions: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type smart_contract_stddev_samp_fields {
+  scanned_transactions: Float
+}
+
+"""aggregate sum on columns"""
+type smart_contract_sum_fields {
+  scanned_transactions: Int
+}
+
+"""
+update columns of table "smart_contract"
+"""
+enum smart_contract_update_column {
+  """column name"""
+  asset_name
+
+  """column name"""
+  base_marketplace_uri
+
+  """column name"""
+  chain_id
+
+  """column name"""
+  collection_uri
+
+  """column name"""
+  contract_key
+
+  """column name"""
+  contract_key_wrapper
+
+  """column name"""
+  created_at
+
+  """column name"""
+  default_commission_id
+
+  """column name"""
+  frozen
+
+  """column name"""
+  id
+
+  """column name"""
+  json_meta
+
+  """column name"""
+  name
+
+  """column name"""
+  scanned_transactions
+
+  """column name"""
+  spec
+
+  """column name"""
+  token_uri
+
+  """column name"""
+  type
+
+  """column name"""
+  updated_at
+}
+
+input smart_contract_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: smart_contract_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: smart_contract_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+  """
+  _delete_elem: smart_contract_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: smart_contract_delete_key_input
+
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: smart_contract_inc_input
+
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: smart_contract_prepend_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: smart_contract_set_input
+  where: smart_contract_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type smart_contract_var_pop_fields {
+  scanned_transactions: Float
+}
+
+"""aggregate var_samp on columns"""
+type smart_contract_var_samp_fields {
+  scanned_transactions: Float
+}
+
+"""aggregate variance on columns"""
+type smart_contract_variance_fields {
+  scanned_transactions: Float
+}
+
+type subscription_root {
+  """
+  fetch data from the table: "action"
+  """
+  action(
+    """distinct select on columns"""
+    distinct_on: [action_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [action_order_by!]
+
+    """filter the rows returned"""
+    where: action_bool_exp
+  ): [action!]!
+
+  """
+  fetch aggregated fields from the table: "action"
+  """
+  action_aggregate(
+    """distinct select on columns"""
+    distinct_on: [action_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [action_order_by!]
+
+    """filter the rows returned"""
+    where: action_bool_exp
+  ): action_aggregate!
+
+  """fetch data from the table: "action" using primary key columns"""
+  action_by_pk(id: uuid!): action
+
+  """
+  fetch data from the table: "collection"
+  """
+  collection(
+    """distinct select on columns"""
+    distinct_on: [collection_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [collection_order_by!]
+
+    """filter the rows returned"""
+    where: collection_bool_exp
+  ): [collection!]!
+
+  """
+  fetch aggregated fields from the table: "collection"
+  """
+  collection_aggregate(
+    """distinct select on columns"""
+    distinct_on: [collection_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [collection_order_by!]
+
+    """filter the rows returned"""
+    where: collection_bool_exp
+  ): collection_aggregate!
+
+  """
+  fetch data from the table: "collection_attribute"
+  """
+  collection_attribute(
+    """distinct select on columns"""
+    distinct_on: [collection_attribute_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [collection_attribute_order_by!]
+
+    """filter the rows returned"""
+    where: collection_attribute_bool_exp
+  ): [collection_attribute!]!
+
+  """
+  fetch aggregated fields from the table: "collection_attribute"
+  """
+  collection_attribute_aggregate(
+    """distinct select on columns"""
+    distinct_on: [collection_attribute_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [collection_attribute_order_by!]
+
+    """filter the rows returned"""
+    where: collection_attribute_bool_exp
+  ): collection_attribute_aggregate!
+
+  """
+  fetch data from the table: "collection_attribute" using primary key columns
+  """
+  collection_attribute_by_pk(id: uuid!): collection_attribute
+
+  """fetch data from the table: "collection" using primary key columns"""
+  collection_by_pk(id: uuid!): collection
+
+  """An array relationship"""
+  nft_meta(
+    """distinct select on columns"""
+    distinct_on: [nft_meta_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [nft_meta_order_by!]
+
+    """filter the rows returned"""
+    where: nft_meta_bool_exp
+  ): [nft_meta!]!
+
+  """An aggregate relationship"""
+  nft_meta_aggregate(
+    """distinct select on columns"""
+    distinct_on: [nft_meta_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [nft_meta_order_by!]
+
+    """filter the rows returned"""
+    where: nft_meta_bool_exp
+  ): nft_meta_aggregate!
+
+  """
+  fetch data from the table: "nft_meta_attribute"
+  """
+  nft_meta_attribute(
+    """distinct select on columns"""
+    distinct_on: [nft_meta_attribute_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [nft_meta_attribute_order_by!]
+
+    """filter the rows returned"""
+    where: nft_meta_attribute_bool_exp
+  ): [nft_meta_attribute!]!
+
+  """
+  fetch aggregated fields from the table: "nft_meta_attribute"
+  """
+  nft_meta_attribute_aggregate(
+    """distinct select on columns"""
+    distinct_on: [nft_meta_attribute_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [nft_meta_attribute_order_by!]
+
+    """filter the rows returned"""
+    where: nft_meta_attribute_bool_exp
+  ): nft_meta_attribute_aggregate!
+
+  """
+  fetch data from the table: "nft_meta_attribute" using primary key columns
+  """
+  nft_meta_attribute_by_pk(id: uuid!): nft_meta_attribute
+
+  """fetch data from the table: "nft_meta" using primary key columns"""
+  nft_meta_by_pk(id: uuid!): nft_meta
+
+  """An array relationship"""
+  nft_state(
+    """distinct select on columns"""
+    distinct_on: [nft_state_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [nft_state_order_by!]
+
+    """filter the rows returned"""
+    where: nft_state_bool_exp
+  ): [nft_state!]!
+
+  """An aggregate relationship"""
+  nft_state_aggregate(
+    """distinct select on columns"""
+    distinct_on: [nft_state_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [nft_state_order_by!]
+
+    """filter the rows returned"""
+    where: nft_state_bool_exp
+  ): nft_state_aggregate!
+
+  """fetch data from the table: "nft_state" using primary key columns"""
+  nft_state_by_pk(id: uuid!): nft_state
+
+  """
+  fetch data from the table: "smart_contract"
+  """
+  smart_contract(
+    """distinct select on columns"""
+    distinct_on: [smart_contract_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [smart_contract_order_by!]
+
+    """filter the rows returned"""
+    where: smart_contract_bool_exp
+  ): [smart_contract!]!
+
+  """
+  fetch aggregated fields from the table: "smart_contract"
+  """
+  smart_contract_aggregate(
+    """distinct select on columns"""
+    distinct_on: [smart_contract_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [smart_contract_order_by!]
+
+    """filter the rows returned"""
+    where: smart_contract_bool_exp
+  ): smart_contract_aggregate!
+
+  """fetch data from the table: "smart_contract" using primary key columns"""
+  smart_contract_by_pk(id: uuid!): smart_contract
+}
+
+scalar timestamp
+
+"""
+Boolean expression to compare columns of type "timestamp". All fields are combined with logical 'AND'.
+"""
+input timestamp_comparison_exp {
+  _eq: timestamp
+  _gt: timestamp
+  _gte: timestamp
+  _in: [timestamp!]
+  _is_null: Boolean
+  _lt: timestamp
+  _lte: timestamp
+  _neq: timestamp
+  _nin: [timestamp!]
+}
+
+scalar uuid
+
+"""
+Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'.
+"""
+input uuid_comparison_exp {
+  _eq: uuid
+  _gt: uuid
+  _gte: uuid
+  _in: [uuid!]
+  _is_null: Boolean
+  _lt: uuid
+  _lte: uuid
+  _neq: uuid
+  _nin: [uuid!]
+}
+
