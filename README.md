@@ -42,3 +42,9 @@ To set up the Data Lake and Streamer Service, follow the steps below. You can al
   - `STREAM_HISTORICAL_DATA=false` (data will stream immediatley from the tip of the chain, set this value to true if you want to also stream historical data)
 - Set the build command to `yarn build`
 - Set the start command to `yarn start:prod`
+
+**Docker setup**
+
+```sh
+docker-compose up -d
+```

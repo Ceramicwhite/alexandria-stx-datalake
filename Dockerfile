@@ -11,5 +11,4 @@ USER 1000
 WORKDIR /build
 COPY --from=builder /build .
 
-
 CMD [ "yarn", "start:prod" ]
