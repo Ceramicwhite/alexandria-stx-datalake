@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:14-alpine
+    container_name: postgres
+    restart: on-failure
+    stop_grace_period: 1m
+    init: true
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-postgres}
+      - POSTGRES_USER=${DB_USER:-postgres}
+      - POSTGRES_DB=${DB_DATABASE:-stacks-data-lake}
+      - POSTGRES_PORT=${DB_port:-5432}
+    volumes:
+      - ./persistent-data/postgres:/var/lib/postgresql/data
+      - ./src/database/legacy-first-migration.sql:/docker-entrypoint-initdb.d/init.sql
+
+  alexandria-indexer:
+    build: ./
+    #image: ceramicwhite/alexandria-indexer:0.0.1
+    restart: on-failure
+    stop_grace_period: 1m
+    init: true
+    env_file:
+      - .env
+    networks:
+      - default
+    depends_on:
+      - postgres
+
+  graphql-engine:
+    image: hasura/graphql-engine:latest
+    restart: on-failure
+    stop_grace_period: 1m
+    init: true
+    env_file:
+      - .env
+    ports:
+      - "5000:8080"
+    networks:
+      - default
+    depends_on:
+      - postgres

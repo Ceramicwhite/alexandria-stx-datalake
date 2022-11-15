@@ -20,9 +20,9 @@ import { appConfig } from './common/config/app.config';
       );
     }
 
-    // if (appConfig.fetchHistoricalSmartContracts) {
-    //   await application.fetchHistoricalSmartContracts();
-    // }
+    if (appConfig.fetchHistoricalSmartContracts) {
+       await application.fetchHistoricalSmartContracts();
+     }
 
     // if (appConfig.pastBlocksToProcess) {
     //   await application.reprocessPastBlocks();

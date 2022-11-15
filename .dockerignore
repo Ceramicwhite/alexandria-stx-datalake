@@ -1,0 +1,10 @@
+docker-compose.yaml
+.git
+.cache
+.github
+persistent-data
+.dockerignore
+dist
+servers.json
+node_modules
+.env
